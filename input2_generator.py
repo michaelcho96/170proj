@@ -12,7 +12,7 @@ output = open("TESTINSTANCE2.in", "w")
 output.write("500\n")
 # We have no child vertices.
 output.write("\n")
-# We will write in cycles of 20.
+# We will write in cycles of 10.
 for cycle in range (0,500,10):
 	# We define our offset to be added to each node.
 	start = cycle//10 * 10
