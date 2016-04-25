@@ -7,4 +7,6 @@ for node_a in range(0, 500):
 	for node_b in range(0, 500):
 		if node_a != node_b:
 			output.write("1 ")
+		else:
+			output.write("0 ")
 	output.write("\n")
