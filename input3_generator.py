@@ -14,9 +14,9 @@ for x in range (0, 500):
 			output.write("0 ")
 		else:
 			if x % 5 == 0 or y % 5 == 0:
-				output.write("1 ")
-			else:
 				output.write("0 ")
+			else:
+				output.write("1 ")
 	output.write("\n")
 
 
