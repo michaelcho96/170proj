@@ -35,10 +35,11 @@ def create_graph(instance):
 
 def find_cycles(input_graph):
     nodes = input_graph.nodes();
-    visited = []
+    list_cycles = []
     for node in nodes:
-        visited[node] = False
-    visited[0] = True
+        list_cycles.extend(explore(node, node, input_graph, []))
+        input_graph.remove_node(n)
+    return list_cycles
 
 def explore(root_node, node, input_graph, cycle):
     # At each vertex, we check to see if any of the edges lead back to the root
@@ -47,15 +48,34 @@ def explore(root_node, node, input_graph, cycle):
     # Once we have searched all other edges, we return the list of cycles.
 
     #If the cycle has five elements in it, it can no longer qualify
-    if (len(cycle) == 5):
-        return [] 
     cycle_list = []
+    if (len(cycle) == 5):
+        return cycle_list
+    # We look at all edges from node, checking if a cycle is found.
     for edge in input_graph.edges(node, False):
         next_vertex = edge[1]
         if edge[1] == root_node:
             cycle_list.append(cycle)
         else:
-            updated_cycle = cycle
+            updated_cycle = list(cycle)
             updated_cycle.append[next_vertex]
             cycle_list.extend(explore(root_node, next_vertex, input_graph, updated_cycle))
-        return cycle_list 
+    return cycle_list 
+
+G = nx.DiGraph()
+G.add_node(0)
+G.add_node(1)
+G.add_node(2)
+G.add_edge(0,1)
+G.add_edge(0,2)
+G.add_edge(1,2)
+G.add_edge(1,0)
+edge_list = G.edges(0, False)
+for e in edge_list:
+    print (e[1])
+
+
+
+
+
+
