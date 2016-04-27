@@ -26,9 +26,11 @@ def create_graph(instance):
         for i in range(n):
             row = f.readline()
             elements = row.split(" ")
+            print(elements)
             for j in range(n):
-                if elements[j] == "1":
+                if "1" in elements[j]:
                     g.add_edge(i,j)
+        print("num edges: " + str(len(nx.edges(g))))
     return g
 
 def find_cycles(input_graph):

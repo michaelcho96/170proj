@@ -34,10 +34,12 @@ def naive_sol(g, cycles):
     new_cycles = list(nx.simple_cycles(g))
     # print("num cycles: " + str(len(new_cycles)))
     short_cycles = []
+    print(new_cycles)
     for cycle in new_cycles:
         # print(cycle)
         if len(cycle) <= 6:
             short_cycles.append(cycle)
+    print("short cycles: " + str(short_cycles))
     if len(short_cycles) == 0:
         total_cost = 0
         costs = nx.get_node_attributes(g, "penalty")
@@ -60,7 +62,7 @@ def naive_sol(g, cycles):
     return curr_min_cost, curr_best_cycles
 
 
-g = create_graph("instances/104.in")
+g = create_graph("instances/109.in")
 print(naive_sol(g, []))
 
 
