@@ -51,7 +51,6 @@ def explore(root_node, node, input_graph, cycle):
     cycle.append(node)
     cycle_list = []
     if (len(cycle) == 6):
-        print("done with: " + str(node))
         return cycle_list
     # We look at all edges from node, checking if a cycle is found.
     # print(input_graph.edges(node, False ))
@@ -65,7 +64,6 @@ def explore(root_node, node, input_graph, cycle):
             if node != root_node:
                 updated_graph.remove_node(node)
             cycle_list.extend(explore(root_node, next_vertex, updated_graph, updated_cycle))
-    print("done with: " + str(node))
     return cycle_list 
 
 
