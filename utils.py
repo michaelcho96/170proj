@@ -17,7 +17,9 @@ def create_graph(instance):
         g = nx.DiGraph()
         g.add_nodes_from(range(n), penalty=1)
         for c in children:
-            if type(c) == int:
+            if c == "\n":
+                pass
+            elif type(c) == int:
                 g.node[c]['penalty'] = 2
             elif type(c) == str:
                 g.node[int(c.strip())]['penalty'] = 2
@@ -48,7 +50,7 @@ def explore(root_node, node, input_graph, cycle):
     cycle_list = []
     for edge in input_graph.edges(node, False):
         next_vertex = edge[1]
-        if edge[1] = root_node:
+        if edge[1] == root_node:
             cycle_list.append(cycle)
         else:
             updated_cycle = cycle
