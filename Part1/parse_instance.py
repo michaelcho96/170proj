@@ -20,6 +20,6 @@ def create_graph(instance):
             row = f.readline()
             elements = row.split(" ")
             for j in range(n):
-                if elements[j] == 1:
+                if elements[j] == "1":
                     g.add_edge(i,j)
     return g
