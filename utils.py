@@ -62,17 +62,6 @@ def explore(root_node, node, input_graph, cycle):
             cycle_list.extend(explore(root_node, next_vertex, input_graph, updated_cycle))
     return cycle_list 
 
-G = nx.DiGraph()
-G.add_node(0)
-G.add_node(1)
-G.add_node(2)
-G.add_edge(0,1)
-G.add_edge(0,2)
-G.add_edge(1,2)
-G.add_edge(1,0)
-edge_list = G.edges(0, False)
-for e in edge_list:
-    print (e[1])
 
 
 
