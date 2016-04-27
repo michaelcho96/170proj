@@ -38,7 +38,7 @@ def find_cycles(input_graph):
     list_cycles = []
     for node in nodes:
         list_cycles.extend(explore(node, node, input_graph, []))
-        input_graph.remove_node(n)
+        input_graph.remove_node(node)
     return list_cycles
 
 def explore(root_node, node, input_graph, cycle):
@@ -48,18 +48,24 @@ def explore(root_node, node, input_graph, cycle):
     # Once we have searched all other edges, we return the list of cycles.
 
     #If the cycle has five elements in it, it can no longer qualify
+    cycle.append(node)
     cycle_list = []
-    if (len(cycle) == 5):
+    if (len(cycle) == 6):
+        print("done with: " + str(node))
         return cycle_list
     # We look at all edges from node, checking if a cycle is found.
+    # print(input_graph.edges(node, False ))
     for edge in input_graph.edges(node, False):
         next_vertex = edge[1]
-        if edge[1] == root_node:
+        if next_vertex == root_node:
             cycle_list.append(cycle)
         else:
             updated_cycle = list(cycle)
-            updated_cycle.append[next_vertex]
-            cycle_list.extend(explore(root_node, next_vertex, input_graph, updated_cycle))
+            updated_graph = input_graph.copy()
+            if node != root_node:
+                updated_graph.remove_node(node)
+            cycle_list.extend(explore(root_node, next_vertex, updated_graph, updated_cycle))
+    print("done with: " + str(node))
     return cycle_list 
 
 
