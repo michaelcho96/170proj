@@ -53,14 +53,14 @@ def naive_sol(g, cycles, sols):
         for node in cycle:
             g_copy.remove_node(node)
         cycles.append(cycle)
-        copy_cost, copy_cycles_used = naive_sol(g_copy, cycles)
+        copy_cost, copy_cycles_used = naive_sol(g_copy, cycles, sols)
         if copy_cost < curr_min_cost:
             curr_min_cost = copy_cost
             curr_best_cycles = copy_cycles_used
     return curr_min_cost, curr_best_cycles, sols.add()
 
 
-g = utils.create_graph("TMDW3.in")
+g = create_graph("TMDW3.in")
 print(naive_sol(g, []))
 
 
