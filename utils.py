@@ -120,7 +120,13 @@ def construct_cluster_graph(G):
                 if contain_same_element(cluster_a_nodes, cluster_b_nodes):
                     CGraph.add_edge(cluster_a, cluster_b)
     return CGraph
-
+    
+def contain_same_element(list_a, list_b):
+    for element_a in list_a:
+        for element_b in list_b:
+            if element_a == element_b:
+                return True
+    return False
 
 
 
