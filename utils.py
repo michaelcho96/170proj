@@ -34,11 +34,12 @@ def create_graph(instance):
     return g
 
 def find_cycles(input_graph):
-    nodes = input_graph.nodes();
+    G = input_graph.copy(input_graph)
+    nodes = G.nodes();
     list_cycles = []
     for node in nodes:
-        list_cycles.extend(explore(node, node, input_graph, []))
-        input_graph.remove_node(node)
+        list_cycles.extend(explore(node, node, G, []))
+        G.remove_node(node)
     return list_cycles
 
 def explore(root_node, node, input_graph, cycle):
@@ -66,7 +67,7 @@ def explore(root_node, node, input_graph, cycle):
             cycle_list.extend(explore(root_node, next_vertex, updated_graph, updated_cycle))
     return cycle_list 
 
-
+def 
 
 
 
