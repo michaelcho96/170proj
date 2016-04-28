@@ -3,6 +3,7 @@ from functools import wraps
 import errno
 import os
 import signal
+from best_solutions import write_file
 
 class TimeoutError(Exception):
     pass
@@ -140,6 +141,7 @@ def format_output_cycles(cycle_list):
     output_string = output_string[0:len(output_string) - 1]
     return output_string
 
-
+def add_solutions(list_solutions):
+    write_file(list_solutions)
 
 
