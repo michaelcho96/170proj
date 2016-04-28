@@ -94,6 +94,33 @@ def explore(root_node, node, input_graph, cycle):
             cycle_list.extend(explore(root_node, next_vertex, updated_graph, updated_cycle))
     return cycle_list 
 
+"""Constructs an undirected graph of all valid cycles, with an edge between two nodes
+   of the graph if the underlying cycles share at least one vertex"""
+def construct_cluster_graph(G):
+    list_cycles = list(nx.simple_cycles(G))
+    for cycle in nx.simple_cycles:
+        if len(cycle) > 5:
+            list_cycles.remove(cycle)
+    # We build our secondary graph of cycles
+    CGraph = nx.Graph()
+    counter = 0
+    for cycle in list_cycles:
+        penalty = 0
+        for node in cycle:
+            penalty += G.node[node]['penalty']
+        CGraph.add_node(counter, 'penalty'=penalty, 'nodes'=cycle)
+        counter += 1
+    # If two clusters contain the same node, then we draw 
+    # an edge between them.
+    for cluster_a in CGraph:
+        cluster_a_nodes = CGraph.node[cluster_a]['nodes']
+        for cluster_b in CGraph:
+            if cluster_a != cluster_b:
+                cluster_b_nodes = CGraph.node[cluster_b]['nodes']
+                if contain_same_element(cluster_a_nodes, cluster_b_nodes):
+                    CGraph.add_edge(cluster_a, cluster_b)
+    return CGraph
+
 
 
 
