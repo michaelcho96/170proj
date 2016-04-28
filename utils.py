@@ -61,10 +61,11 @@ def create_graph(instance):
 
 def find_cycles(input_graph):
     nodes = input_graph.nodes();
-    visited = []
+    list_cycles = []
     for node in nodes:
-        visited[node] = False
-    visited[0] = True
+        list_cycles.extend(explore(node, node, input_graph, []))
+        input_graph.remove_node(node)
+    return list_cycles
 
 def explore(root_node, node, input_graph, cycle):
     # At each vertex, we check to see if any of the edges lead back to the root
@@ -73,15 +74,27 @@ def explore(root_node, node, input_graph, cycle):
     # Once we have searched all other edges, we return the list of cycles.
 
     #If the cycle has five elements in it, it can no longer qualify
-    if (len(cycle) == 5):
-        return [] 
+    cycle.append(node)
     cycle_list = []
+    if (len(cycle) == 6):
+        return cycle_list
+    # We look at all edges from node, checking if a cycle is found.
+    # print(input_graph.edges(node, False ))
     for edge in input_graph.edges(node, False):
         next_vertex = edge[1]
-        if edge[1] == root_node:
+        if next_vertex == root_node:
             cycle_list.append(cycle)
         else:
-            updated_cycle = cycle
-            updated_cycle.append[next_vertex]
-            cycle_list.extend(explore(root_node, next_vertex, input_graph, updated_cycle))
-        return cycle_list 
+            updated_cycle = list(cycle)
+            updated_graph = input_graph.copy()
+            if node != root_node:
+                updated_graph.remove_node(node)
+            cycle_list.extend(explore(root_node, next_vertex, updated_graph, updated_cycle))
+    return cycle_list 
+
+
+
+
+
+
+
