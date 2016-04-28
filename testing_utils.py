@@ -1,6 +1,7 @@
 import networkx as nx 
 from utils import find_cycles
 from utils import construct_cluster_graph
+from utils import format_output_cycles
 
 def test_find_cycles1():
 	G = nx.DiGraph()
@@ -51,8 +52,11 @@ def test_construct_cluster_graph():
 		node_list = CG.node[cluster]['nodes']
 		for node in node_list: 
 			print(str(node))
+def test_format_output_cycles():
+	output_list = [[0,1,2], [3,4,5], [6,7,8]]
+	print(format_output_cycles(output_list))
 
-test_construct_cluster_graph()
+test_format_output_cycles()
 
 
 
