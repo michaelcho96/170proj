@@ -38,11 +38,11 @@ def naive_sol(g, cycles, all_cycles):
         current_penalty += costs[node]
     # print("Current Penalty: {0}".format(current_penalty))
     # print("running with {0} nodes and {1} cycles".format(str(num_nodes), len(cycles)))
-    if len(all_cycles) == 0 or num_nodes == 0:
+    if len(all_cycles) == 0 or current_penalty == 0:
         # print("finishing with cost {0} and cycles {1}".format(current_penalty, cycles))
         return current_penalty, cycles
     # Calculate Total Penalty
-    curr_min_cost = current_penalty
+    curr_min_penalty = current_penalty
     curr_best_cycles = cycles.copy()
     for cycle in all_cycles:
         all_cycles_copy = all_cycles.copy()
@@ -58,13 +58,15 @@ def naive_sol(g, cycles, all_cycles):
                 g_copy.remove_node(node)
             cycles_copy = cycles.copy()
             cycles_copy.append(cycle)
-            copy_cost, copy_cycles_used = naive_sol(g_copy, cycles_copy, all_cycles_copy)
-            if copy_cost < curr_min_cost:
-                curr_min_cost = copy_cost
+            copy_penalty, copy_cycles_used = naive_sol(g_copy, cycles_copy, all_cycles_copy)
+            if copy_penalty < curr_min_penalty:
+                curr_min_penalty = copy_penalty
                 curr_best_cycles = copy_cycles_used
-    return curr_min_cost, curr_best_cycles
+                if curr_min_penalty == 0:
+                    break
+    return curr_min_penalty, curr_best_cycles
 
-@timeout(15)
+@timeout(120)
 def all_short_cycles(g):
     all_cycles = nx.simple_cycles(g)
     short_cycles = []
@@ -118,12 +120,12 @@ def single_sol(inst):
     g = create_graph(in_file)
     num_edges = len(nx.edges(g))
     print("Graph has {0} edges...".format(str(num_edges)))
-    write_str = "None"
+    write_str = "Skipped"
     if len(nx.edges(g)) < 1000:
         print("Finding short cycles...")
         try:
             all_cycles = all_short_cycles(g)
-            print("Running algorithm...")
+            print("Running algorithm on {0} cycles".format(len(all_cycles)))
             cost, cycles = naive_sol(g, [], all_cycles)
             if cycles == []:
                 write_str = "{0}       None".format(str(cost))
@@ -136,6 +138,6 @@ def single_sol(inst):
     print(write_str + "\n")
     return write_str
 
-# find_all_sol("m_all_out.txt")
+find_all_sol("m_all_out2.txt")
 
-single_sol("part1/tmdw2.in")
+# single_sol(120)
