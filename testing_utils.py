@@ -61,9 +61,12 @@ def test_find_cycles3():
 	for cycle in list_cycles:
 		print(cycle)
 
-test_find_cycles1()
-
-
+#test_find_cycles1()
+G = nx.Graph()
+G.add_node(0, {'value':1})
+G.add_node(1, {'value':2})
+for node in G.nodes():
+	print(node)
 
 
 

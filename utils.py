@@ -108,7 +108,7 @@ def construct_cluster_graph(G):
         penalty = 0
         for node in cycle:
             penalty += G.node[node]['penalty']
-        CGraph.add_node(counter, 'penalty'=penalty, 'nodes'=cycle)
+        CGraph.add_node(counter, penalty= penalty, nodes=cycle)
         counter += 1
     # If two clusters contain the same node, then we draw 
     # an edge between them.
@@ -120,7 +120,7 @@ def construct_cluster_graph(G):
                 if contain_same_element(cluster_a_nodes, cluster_b_nodes):
                     CGraph.add_edge(cluster_a, cluster_b)
     return CGraph
-    
+
 def contain_same_element(list_a, list_b):
     for element_a in list_a:
         for element_b in list_b:
