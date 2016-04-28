@@ -3,6 +3,7 @@ from functools import wraps
 import errno
 import os
 import signal
+from best_solutions import write_file
 
 class TimeoutError(Exception):
     pass
@@ -137,7 +138,17 @@ def format_output_cycles(cycle_list):
             output_string += " "
         output_string = output_string[0:len(output_string) - 1]
         output_string = output_string + "; "
-    output_string = output_string[0:len(output_string) - 1]
+    output_string = output_string[0:len(output_string) - 2]
     return output_string
+
+def find_total_penalty(G):
+    penalty = 0
+    for node in G.nodes():
+        penalty += G.node[node]['penalty']
+    return penalty
+
+
+def add_solutions(list_solutions):
+    write_file(list_solutions)
 
 
