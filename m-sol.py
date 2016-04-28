@@ -25,44 +25,41 @@ import networkx as nx
 #         sols.add(g, naive_sol(g_copy, cycles.append(cycle)))
 #     return min(sols, key=sols.get)
 
-
+@timeout()
 def naive_sol(g, cycles):
     """
     In progress
     """
-    print("running with {0} nodes".format(str(len(nx.nodes(g)))))
+    print("running with {0} nodes and {1} cycles".format(str(len(nx.nodes(g))), len(cycles)))
     new_cycles = list(nx.simple_cycles(g))
-    # print("num cycles: " + str(len(new_cycles)))
     short_cycles = []
-    print(new_cycles)
     for cycle in new_cycles:
-        # print(cycle)
-        if len(cycle) <= 6:
+        if len(cycle) <= 5:
             short_cycles.append(cycle)
-    print("short cycles: " + str(short_cycles))
     if len(short_cycles) == 0:
         total_cost = 0
         costs = nx.get_node_attributes(g, "penalty")
         for node in nx.nodes(g):
             total_cost += costs[node]
+        print("finishing with cost {0} and cycles {1}".format(total_cost, cycles))
         return total_cost, cycles
     # print("short cycles: " + str(len(short_cycles)))
     curr_min_cost = sys.maxsize
     curr_best_cycles = []
     for cycle in short_cycles:
-        sols = dict()
         g_copy = g.copy()
         for node in cycle:
             g_copy.remove_node(node)
-        cycles.append(cycle)
-        copy_cost, copy_cycles_used = naive_sol(g_copy, cycles)
+        cycles_copy = cycles[:]
+        cycles_copy.append(cycle)
+        copy_cost, copy_cycles_used = naive_sol(g_copy, cycles_copy)
         if copy_cost < curr_min_cost:
             curr_min_cost = copy_cost
             curr_best_cycles = copy_cycles_used
     return curr_min_cost, curr_best_cycles
 
 
-g = create_graph("instances/109.in")
+g = create_graph("instances/225.in")
 print(naive_sol(g, []))
 
 
