@@ -62,7 +62,7 @@ def create_graph(instance):
 """DO NOT USE: RUNTIME EXOPNENTIAL"""
 def find_cycles(input_graph):
     G = input_graph.copy(input_graph)
-    nodes = G.nodes();
+    nodes = G.nodes()
     list_cycles = []
     for node in nodes:
         list_cycles.extend(explore(node, node, G, []))
@@ -98,7 +98,7 @@ def explore(root_node, node, input_graph, cycle):
    of the graph if the underlying cycles share at least one vertex"""
 def construct_cluster_graph(G):
     list_cycles = list(nx.simple_cycles(G))
-    for cycle in nx.simple_cycles:
+    for cycle in nx.simple_cycles(G):
         if len(cycle) > 5:
             list_cycles.remove(cycle)
     # We build our secondary graph of cycles
