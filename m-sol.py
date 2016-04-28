@@ -30,29 +30,35 @@ def naive_sol(g, cycles, all_cycles):
     """
     In progress
     """
-    # print("running with {0} nodes and {1} cycles".format(str(len(nx.nodes(g))), len(cycles)))
-    if len(all_cycles) == 0:
-        total_cost = 0
-        costs = nx.get_node_attributes(g, "penalty")
-        for node in nx.nodes(g):
-            total_cost += costs[node]
-        # print("finishing with cost {0} and cycles {1}".format(total_cost, cycles))
-        return total_cost, cycles
-    curr_min_cost = sys.maxsize
-    curr_best_cycles = []
+    all_nodes = nx.nodes(g)
+    num_nodes = len(all_nodes)
+    costs = nx.get_node_attributes(g, "penalty")
+    current_penalty = 0
+    for node in all_nodes:
+        current_penalty += costs[node]
+    # print("Current Penalty: {0}".format(current_penalty))
+    # print("running with {0} nodes and {1} cycles".format(str(num_nodes), len(cycles)))
+    if len(all_cycles) == 0 or num_nodes == 0:
+        # print("finishing with cost {0} and cycles {1}".format(current_penalty, cycles))
+        return current_penalty, cycles
+    # Calculate Total Penalty
+    curr_min_cost = current_penalty
+    curr_best_cycles = cycles.copy()
     for cycle in all_cycles:
-        all_cycles.remove(cycle)
+        all_cycles_copy = all_cycles.copy()
+        all_cycles_copy.remove(cycle)
         use_cycle = True
         for node in cycle:
             if node not in nx.nodes(g):
+                # print("not using cycle")
                 use_cycle = False
         if use_cycle:
             g_copy = g.copy()
             for node in cycle:
                 g_copy.remove_node(node)
-            cycles_copy = cycles[:]
+            cycles_copy = cycles.copy()
             cycles_copy.append(cycle)
-            copy_cost, copy_cycles_used = naive_sol(g_copy, cycles_copy, all_cycles)
+            copy_cost, copy_cycles_used = naive_sol(g_copy, cycles_copy, all_cycles_copy)
             if copy_cost < curr_min_cost:
                 curr_min_cost = copy_cost
                 curr_best_cycles = copy_cycles_used
@@ -97,16 +103,19 @@ def find_all_sol(outfile):
     with open(outfile, 'w') as outf:
             for i in range(1,493):
                 sol = single_sol(i)
+                outf.write(sol + "\n")
 
-def single_sol(inst_num):
-    if type(inst_num) is int:
-        num = str(inst_num)
-    elif type(inst_num) is str:
-        num = inst_num
+def single_sol(inst):
+    if type(inst) is int:
+        num = str(inst)
+        in_file = "instances/{0}.in".format(num)
+        print("Creating graph of instance {0}".format(num))
+    elif type(inst) is str:
+        in_file = inst
+        print("Creating graph of {0}".format(in_file))
     else:
         raise TypeError
-    print("Creating graph of instance {0}".format(num))
-    g = create_graph("instances/{0}.in".format(num))
+    g = create_graph(in_file)
     num_edges = len(nx.edges(g))
     print("Graph has {0} edges...".format(str(num_edges)))
     write_str = "None"
@@ -125,9 +134,8 @@ def single_sol(inst_num):
     else:
         print("Skipping!")
     print(write_str + "\n")
-    outf.write(write_str + "\n")
     return write_str
 
-find_all_sol("m_all_out.txt")
+# find_all_sol("m_all_out.txt")
 
-# single_sol(71)
+single_sol("part1/tmdw2.in")

@@ -37,7 +37,7 @@ def write_file(list_solutions):
 	output_file = open(filename, "w")
 	output_file.writelines(data)
 
-write_file([])
+# write_file([])
 
 
 

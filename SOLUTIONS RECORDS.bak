@@ -4,7 +4,7 @@
 4: No Algorithm; Penalty|9999|; No Solution
 5: No Algorithm; Penalty|9999|; No Solution
 6: No Algorithm; Penalty|9999|; No Solution
-7: No Algorithm; Penalty|9999|; No Solution
+7: greedy; Penalty|15|;[0, 1, 2, 13, 17]
 8: No Algorithm; Penalty|9999|; No Solution
 9: No Algorithm; Penalty|9999|; No Solution
 10: No Algorithm; Penalty|9999|; No Solution

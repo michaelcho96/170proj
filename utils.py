@@ -52,7 +52,7 @@ def create_graph(instance):
         for i in range(n):
             row = f.readline()
             elements = row.split()
-            print(elements)
+            # print(elements)
             for j in range(n):
                 if "1" in elements[j]:
                     g.add_edge(i,j)
