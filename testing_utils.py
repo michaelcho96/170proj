@@ -4,23 +4,8 @@ from utils import construct_cluster_graph
 
 def test_find_cycles1():
 	G = nx.DiGraph()
-	G.add_node(0)
-	G.add_node(1)
-	G.add_node(2)
-	G.add_node(3)
-	G.add_node(4)
-	G.add_node(5)
-	G.add_node(6)
-	G.add_edge(1,2)
-	G.add_edge(2,3)
-	G.add_edge(3,1)
-	G.add_edge(3,4)
-	G.add_edge(4,5)
-	G.add_edge(5,1)
-	G.add_edge(1,0)
-	G.add_edge(0,1)
-	G.add_edge(5,0)
-	G.add_edge(5,3)
+	G.add_nodes_from([0,1,2,3,4,5,6])
+	G.add_nodes_from([(1,2),(2,3),(3,4),(4,5),(5,1),(1,0),(0,1),(5,0),(5,3),(1,6)])
 	G.add_edge(1,6)
 	list_cycles = find_cycles(G)
 	for cycle in list_cycles:
@@ -28,12 +13,7 @@ def test_find_cycles1():
 
 def test_find_cycles2():
 	G = nx.DiGraph()
-	G.add_node(0)
-	G.add_node(1)
-	G.add_node(2)
-	G.add_node(3)
-	G.add_node(4)
-	G.add_node(5)
+	G.add_nodes_from([0,1,2,3,4,5])
 	G.add_edge(0,1)
 	G.add_edge(1,2)
 	G.add_edge(2,3)
@@ -46,12 +26,7 @@ def test_find_cycles2():
 
 def test_find_cycles3():
 	G = nx.DiGraph()
-	G.add_node(0)
-	G.add_node(1)
-	G.add_node(2)
-	G.add_node(3)
-	G.add_node(4)
-	G.add_node(5)
+	G.add_nodes_from([0,1,2,3,4])
 	G.add_edge(0,1)
 	G.add_edge(1,2)
 	G.add_edge(2,0)
@@ -76,6 +51,7 @@ def test_construct_cluster_graph():
 		node_list = CG.node[cluster]['nodes']
 		for node in node_list: 
 			print(str(node))
+
 test_construct_cluster_graph()
 
 
