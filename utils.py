@@ -60,7 +60,7 @@ def create_graph(instance):
     return g
 
 def find_cycles(input_graph):
-    G = input_graph.copy(input_graph)
+    G = input_graph.copy()
     nodes = G.nodes();
     list_cycles = []
     for node in nodes:
