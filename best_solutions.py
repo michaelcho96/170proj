@@ -33,11 +33,11 @@ def write_file(list_solutions):
 		list_tokens = data[instance_number - 1].split("|")
 		prev_penalty = int(list_tokens[1])
 		if penalty < prev_penalty:
-			data[instance_number - 1] = str(instance_number -1) + ": " + algorithm_name + "; Penalty|" + str(penalty) + "|;" + new_solution
+			data[instance_number - 1] = str(instance_number) + ": " + algorithm_name + "; Penalty|" + str(penalty) + "|;" + new_solution + "\n"
 	output_file = open(filename, "w")
 	output_file.writelines(data)
 
-"""CHANGE THIS OUT WITH YOUR ACTUAL SOLUTION SET (or just call the above method)"""
-list_solutions = []
-write_file(list_solutions)
+write_file([])
+
+
 
