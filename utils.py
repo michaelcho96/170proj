@@ -75,7 +75,7 @@ def __explore(node, input_graph, counter):
     counter += 1
     for edge in input_graph.edges(node, False):
         next_vertex = edge[1]
-        G.node[next_vertex]['pre-visit'] < node_previsit:
+        if G.node[next_vertex]['pre-visit'] < node_previsit:
             # We explore for cycles
             # Place code here
             print("error: need code")
@@ -84,8 +84,8 @@ def __explore(node, input_graph, counter):
 """ Constructs an undirected graph of all valid cycles, with an edge between two nodes
    of the graph if the underlying cycles share at least one vertex """
 def construct_cluster_graph(G):
-    list_cycles = list(nx.simple_cycles(G))
-    for cycle in nx.simple_cycles(G):
+    list_cycles = simple_k_cycles(G, 5)
+    for cycle in list_cycles:
         if len(cycle) > 5:
             list_cycles.remove(cycle)
     # We build our secondary graph of cycles

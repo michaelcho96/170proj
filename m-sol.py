@@ -74,6 +74,8 @@ def all_short_cycles(g):
     for cycle in all_cycles:
         if len(cycle) <= 5:
             short_cycles.append(cycle)
+        else:
+            print("cycle thing didn't work...")
     return short_cycles
 
 # def find_all_sol(outfile):
@@ -102,14 +104,14 @@ def all_short_cycles(g):
 #             outf.write(write_str + "\n")
 
 
-def find_all_sol(outfile, logfile):
+def find_all_sol(outfile):
 
     for i in range(1,493):
         sol, log = single_sol(i)
         with open(outfile, 'a') as outf:
             outf.write(sol + "\n")
-        with open(logfile, 'a') as logf:
-            logf.write(log + "\n")
+        # with open(logfile, 'a') as logf:
+            # logf.write(log + "\n")
 
 
 # @timeout()
@@ -142,15 +144,17 @@ def single_sol(inst):
             all_cycles = all_short_cycles(g)
             print("We have {0} cycles...".format(len(all_cycles)))
             if len(all_cycles) > 20:
-                raise TimeoutError
-            update = "Running algorithm on {0} cycles...".format(len(all_cycles))
-            print(update)
-            log_str += update + "\n"
-            cost, cycles = naive_sol(g, [], all_cycles)
-            if cycles == []:
-                write_str = "{0}       None".format(str(cost))
-            else: 
-                write_str = "{0}       {1}".format(str(cost), format_output_cycles(cycles))
+                print("Too many cycles :(")
+                write_str = "too many cycles"
+            else:
+                update = "Running algorithm on {0} cycles...".format(len(all_cycles))
+                print(update)
+                log_str += update + "\n"
+                cost, cycles = naive_sol(g, [], all_cycles)
+                if cycles == []:
+                    write_str = "{0}       None".format(str(cost))
+                else: 
+                    write_str = "{0}       {1}".format(str(cost), format_output_cycles(cycles))
         except(TimeoutError):
             update = "Timeout!"
             print(update)
@@ -160,14 +164,13 @@ def single_sol(inst):
         print(update)
         log_str += update    
     update = str(inst) + write_str + "\n"
-    update = "Timeout!"
     print(update + "\n")
     log_str += update + "\n"
     return write_str, log_str
 
 
 # date_suffix = datetime.now()
-# find_all_sol("m_all_out + {0}.txt".format(date_suffix, "m_log + {0}.txt".format(date_suffix))
+find_all_sol("m_all_out3.txt")
 
 def single_sol_by_input():
     inp = input("Enter instance number, or None: ")
@@ -176,7 +179,7 @@ def single_sol_by_input():
 
 # single_sol_by_input()
 
-single_sol("part1/tmdw1.in")
+# single_sol("part1/tmdw1.in")
 
 def sol_by_range(start, end):
     if start not in range(0,493):
