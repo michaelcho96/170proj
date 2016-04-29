@@ -42,11 +42,11 @@ def find_max_penalty(node_list, CG):
 	return max_node
 
 list_solutions = []
-for index in range(7,8):
+for index in range(1,10):
 	filename = "instances/" + str(index) + ".in"
 	G = create_graph(filename)
 	solution = greedy_algorithm(G)
-	formatted_solution = [index, "greedy", solution[1], solution[0]]
+	formatted_solution = [index, "Greedy", solution[1], solution[0]]
 	list_solutions.append(formatted_solution)
 add_solutions(list_solutions)
 
