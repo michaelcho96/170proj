@@ -32,18 +32,18 @@ def timeout(seconds=10, error_message=os.strerror(errno.ETIME)):
     Nodes have 'penalty' attributes: 1 for adults, 2 for children. """
 def create_graph(instance):
     
-    print("creating graph of " + instance)
     with open(instance) as f:
         n = int(f.readline())
         children_line = f.readline()
         if children_line != "\n":
-            children = children_line.split(" ")
+            children = children_line.split()
+            # print(children)
         else: 
             children = []
         g = nx.DiGraph()
         g.add_nodes_from(range(n), penalty=1)
         for c in children:
-            if c == "\n":
+            if c == "\n" or c == " ":
                 pass
             elif type(c) == int:
                 g.node[c]['penalty'] = 2
@@ -51,12 +51,12 @@ def create_graph(instance):
                 g.node[int(c.strip())]['penalty'] = 2
         for i in range(n):
             row = f.readline()
-            elements = row.split(" ")
-            print(elements)
+            elements = row.split()
+            # print(elements)
             for j in range(n):
                 if "1" in elements[j]:
                     g.add_edge(i,j)
-        print("num edges: " + str(len(nx.edges(g))))
+        # print("num edges: " + str(len(nx.edges(g))))
     return g
 
 """ DO NOT USE: RUNTIME EXOPNENTIAL """
@@ -146,6 +146,7 @@ def find_total_penalty(G):
     for node in G.nodes():
         penalty += G.node[node]['penalty']
     return penalty
+
 
 def add_solutions(list_solutions):
     write_file(list_solutions)
