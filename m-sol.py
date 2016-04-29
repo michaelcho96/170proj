@@ -2,6 +2,8 @@ import sys
 from utils import *
 import networkx as nx
 import datetime
+from collections import defaultdict
+
 
 # def naive_sol(g, cycles):
 #     """
@@ -65,9 +67,9 @@ def naive_sol(g, cycles, all_cycles):
                     break
     return curr_min_penalty, curr_best_cycles
 
-@timeout(120)
+# @timeout(600)
 def all_short_cycles(g):
-    all_cycles = nx.simple_cycles(g)
+    all_cycles = simple_k_cycles(g, 5)
     short_cycles = []
     for cycle in all_cycles:
         if len(cycle) <= 5:
@@ -110,7 +112,7 @@ def find_all_sol(outfile, logfile):
             logf.write(log + "\n")
 
 
-@timeout(120)
+# @timeout()
 def single_sol(inst):
     log_str = ""
     if type(inst) is int:
@@ -132,12 +134,13 @@ def single_sol(inst):
     print(update)
     log_str += update + "\n"
     write_str = "Skipped"
-    if len(nx.edges(g)) < 1000:
+    if len(nx.edges(g)) < 10000000:
         update = "Finding short cycles..."
         print(update)
         log_str += update + "\n"
         try:
             all_cycles = all_short_cycles(g)
+            print("We have {0} cycles...".format(len(all_cycles)))
             if len(all_cycles) > 20:
                 raise TimeoutError
             update = "Running algorithm on {0} cycles...".format(len(all_cycles))
@@ -173,7 +176,7 @@ def single_sol_by_input():
 
 # single_sol_by_input()
 
-
+single_sol("part1/tmdw1.in")
 
 def sol_by_range(start, end):
     if start not in range(0,493):
@@ -187,4 +190,4 @@ def sol_by_range(start, end):
             sol, log = single_sol(i)
             outf.write(sol + "\n")
 
-sol_by_range(1,10)
+# sol_by_range(1,10)

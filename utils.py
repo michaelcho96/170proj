@@ -4,6 +4,8 @@ import errno
 import os
 import signal
 from best_solutions import write_file
+from collections import defaultdict
+
 
 class TimeoutError(Exception):
     pass
@@ -227,6 +229,8 @@ def simple_k_cycles(G, k):
         B=defaultdict(set) # graph portions that yield no elementary circuit
         stack=[ (startnode,list(subG[startnode])) ]  # subG gives component nbrs
         while stack:
+            if len(path) > k:
+                break
             thisnode,nbrs = stack[-1]
             if nbrs:
                 nextnode = nbrs.pop()
