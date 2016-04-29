@@ -64,39 +64,23 @@ def create_graph(instance):
 """ DO NOT USE: RUNTIME EXOPNENTIAL """
 def find_cycles(input_graph):
     G = input_graph.copy()
-    nodes = G.nodes()
-    list_cycles = []
-    for node in nodes:
-        list_cycles.extend(explore(node, node, G, []))
-        G.remove_node(node)
-    return list_cycles
+    for node in G.nodes():
+        G.node[node]['pre-visit'] = 500
+    __explore(0, G, 0)
 
-""" Helper function for find_cycles() """
-def explore(root_node, node, input_graph, cycle):
-    # At each vertex, we check to see if any of the edges lead back to the root
-    # node. If so, we add that cycle to our list of cylces. If there are edges
-    # which do not lead back to the vertex, we explore those nodes as well. 
-    # Once we have searched all other edges, we return the list of cycles.
-
-    #If the cycle has five elements in it, it can no longer qualify
-    cycle.append(node)
+def __explore(node, input_graph, counter):
     cycle_list = []
-    if (len(cycle) == 6):
-        return cycle_list
-    # We look at all edges from node, checking if a cycle is found.
-    # print(input_graph.edges(node, False ))
+    node_previsit = counter
+    G.node[node]['pre-visit'] = node_previsit
+    counter += 1
     for edge in input_graph.edges(node, False):
         next_vertex = edge[1]
-        if next_vertex == root_node:
-            cycle_list.append(cycle)
-        else:
-            updated_cycle = list(cycle)
-            updated_graph = input_graph.copy()
-            if node != root_node:
-                updated_graph.remove_node(node)
-            cycle_list.extend(explore(root_node, next_vertex, updated_graph, updated_cycle))
-    return cycle_list 
-
+        G.node[next_vertex]['pre-visit'] < node_previsit:
+            # We explore for cycles
+            # Place code here
+            print("error: need code")
+        cycles_list.extend(__explore(next_vertex))
+        
 """ Constructs an undirected graph of all valid cycles, with an edge between two nodes
    of the graph if the underlying cycles share at least one vertex """
 def construct_cluster_graph(G):
