@@ -8,8 +8,7 @@ from greedy_solution import greedy_algorithm
 def test_find_cycles1():
 	G = nx.DiGraph()
 	G.add_nodes_from([0,1,2,3,4,5,6])
-	G.add_nodes_from([(1,2),(2,3),(3,4),(4,5),(5,1),(1,0),(0,1),(5,0),(5,3),(1,6)])
-	G.add_edge(1,6)
+	G.add_edges_from([(1,2),(2,3),(3,4),(4,5),(5,1),(1,0),(0,1),(5,0),(5,3),(1,6)])
 	list_cycles = find_cycles(G)
 	for cycle in list_cycles:
 		print(cycle)
@@ -87,7 +86,7 @@ def test_simple_k_cycles():
 #test_greedy_algorithm()
 #test_construct_cluster_graph()
 #test_simple_k_cycles()
-test_find_cycles1()
+test_find_cycles3()
 
 
 

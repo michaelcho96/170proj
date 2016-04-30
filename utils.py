@@ -61,12 +61,14 @@ def create_graph(instance):
         # print("num edges: " + str(len(nx.edges(g))))
     return g
 
-""" DO NOT USE: RUNTIME EXOPNENTIAL """
+""" DO NOT USE: RUNTIME |V|^6 """
 def find_cycles(input_graph):
     G = input_graph.copy()
     cycle_list = []
-    for node in G.nodes():
-        cycle_list.extend(_explore2(node, node, G, []))
+    list_nodes = G.nodes()
+    for node in list_nodes:
+        print("searching node " + str(node))
+        cycle_list.extend(_explore2(node, node, G, [node]))
         G.remove_node(node)
     return cycle_list
 
@@ -85,16 +87,19 @@ def _explore(node, input_graph, counter):
 
 def _explore2(root_node, node, input_graph, path):
     cycle_list = []
-    if len(path) == 5: # If the path already has five vertices, then there is no valid cycle
+    if len(path) == 6: # If the path already has six vertices, then there is no valid cycle
         return cycle_list
     for edge in input_graph.edges(node, False):
         next_node = edge[1]
-        updated_path = list(path)
-        updated_path.append(next_node)
         if next_node == root_node:
             cycle_list.append(path)
         else:
-            cycle_list.extend(_explore2(root_node, next_node, input_graph, updated_path)) # Recursive call
+            updated_path = list(path)
+            updated_path.append(next_node)
+            updated_graph = input_graph.copy()
+            if node != root_node:
+                updated_graph.remove_node(node)
+            cycle_list.extend(_explore2(root_node, next_node, updated_graph, updated_path)) # Recursive call
     return cycle_list
 
 
