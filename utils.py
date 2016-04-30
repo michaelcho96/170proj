@@ -64,11 +64,13 @@ def create_graph(instance):
 """ DO NOT USE: RUNTIME EXOPNENTIAL """
 def find_cycles(input_graph):
     G = input_graph.copy()
+    cycle_list = []
     for node in G.nodes():
-        G.node[node]['pre-visit'] = 500
-    __explore(0, G, 0)
+        cycle_list.extend(_explore2(node, node, G, []))
+        G.remove_node(node)
+    return cycle_list
 
-def __explore(node, input_graph, counter):
+def _explore(node, input_graph, counter):
     cycle_list = []
     node_previsit = counter
     G.node[node]['pre-visit'] = node_previsit
@@ -80,11 +82,27 @@ def __explore(node, input_graph, counter):
             # Place code here
             print("error: need code")
         cycles_list.extend(__explore(next_vertex))
+
+def _explore2(root_node, node, input_graph, path):
+    cycle_list = []
+    if len(path) == 5: # If the path already has five vertices, then there is no valid cycle
+        return cycle_list
+    for edge in input_graph.edges(node, False):
+        next_node = edge[1]
+        updated_path = list(path)
+        updated_path.append(next_node)
+        if next_node == root_node:
+            cycle_list.append(path)
+        else:
+            cycle_list.extend(_explore2(root_node, next_node, input_graph, updated_path)) # Recursive call
+    return cycle_list
+
+
         
 """ Constructs an undirected graph of all valid cycles, with an edge between two nodes
    of the graph if the underlying cycles share at least one vertex """
 def construct_cluster_graph(G):
-    list_cycles = simple_k_cycles(G, 5)
+    list_cycles = list(find_cycles(G))
     for cycle in list_cycles:
         if len(cycle) > 5:
             list_cycles.remove(cycle)
@@ -185,6 +203,7 @@ def simple_k_cycles(G, k):
     --------
     cycle_basis
     """
+    """
     def _unblock(thisnode,blocked,B):
         stack=set([thisnode])
         while stack:
@@ -244,4 +263,4 @@ def simple_k_cycles(G, k):
         # done processing this node
         subG.remove_node(startnode)
         H=subG.subgraph(scc)  # make smaller to avoid work in SCC routine
-        sccs.extend(list(nx.strongly_connected_components(H)))
+        sccs.extend(list(nx.strongly_connected_components(H))) """

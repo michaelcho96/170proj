@@ -3,6 +3,7 @@ from utils import find_cycles
 from utils import construct_cluster_graph
 from utils import format_output_cycles
 from greedy_solution import greedy_algorithm
+#from utils import simple_k_cycles
 
 def test_find_cycles1():
 	G = nx.DiGraph()
@@ -72,9 +73,21 @@ def test_greedy_algorithm():
 	print("Penalty: " + str(solution[1]))
 	print("Solution: " + solution[0])
 
-test_greedy_algorithm()
-#test_construct_cluster_graph()
+def test_simple_k_cycles():
+	G = nx.DiGraph()
+	G.add_nodes_from([0,1,2,3,4,5,6])
+	G.add_edges_from9[(0,1),(1,2),(2,3),(3,4),(4,5),(5,6),(6,0)]
+	print("starting")
+	cycles_list = list(simple_k_cycles(G, 5))
+	print("done")
+	for cycle in cycles_list:	
+		print(cycle)
 
+
+#test_greedy_algorithm()
+#test_construct_cluster_graph()
+#test_simple_k_cycles()
+test_find_cycles1()
 
 
 
