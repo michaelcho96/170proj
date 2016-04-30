@@ -102,7 +102,7 @@ def _explore2(root_node, node, input_graph, path):
 """ Constructs an undirected graph of all valid cycles, with an edge between two nodes
    of the graph if the underlying cycles share at least one vertex """
 def construct_cluster_graph(G):
-    list_cycles = list(find_cycles(G))
+    list_cycles = list(nx.simple_cycles(G))
     for cycle in list_cycles:
         if len(cycle) > 5:
             list_cycles.remove(cycle)

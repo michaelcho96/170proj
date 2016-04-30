@@ -4,6 +4,8 @@ from utils import format_output_cycles
 from utils import find_total_penalty
 from utils import create_graph
 from utils import add_solutions
+import multiprocessing
+import time
 
 def greedy_algorithm(G):
 	CG = construct_cluster_graph(G)
@@ -29,7 +31,6 @@ def greedy_algorithm(G):
 	penalty = find_total_penalty(G) - pre_penalty
 	output_string = format_output_cycles(list_cycles)
 	return [output_string, penalty]
-
 	
 def find_max_penalty(node_list, CG):
 	max_penalty = 0
@@ -41,14 +42,30 @@ def find_max_penalty(node_list, CG):
 			max_node = node
 	return max_node
 
-list_solutions = []
-for index in range(1,10):
+def execute_greedy(index):
 	filename = "instances/" + str(index) + ".in"
 	G = create_graph(filename)
 	solution = greedy_algorithm(G)
 	formatted_solution = [index, "Greedy", solution[1], solution[0]]
-	list_solutions.append(formatted_solution)
-add_solutions(list_solutions)
+	list_solutions = [formatted_solution]
+	add_solutions(list_solutions)
+
+def timed_execution():
+	if __name__ == '__main__':
+    	# Start foo as a process
+		for index in range(1,3):
+			print("Processing input " + str(index) + ".")
+			p = multiprocessing.Process(target=execute_greedy, name="execute_greedy", args=(index,))	
+			p.start()
+ 			# Wait 10 seconds for foo
+			time.sleep(120)
+			if p.is_alive():
+				print("Process " + str(index) + " still running. Killing.")
+				p.terminate()
+				# Cleanup
+				p.join()
+			p.join()
+timed_execution()
 
 
 
