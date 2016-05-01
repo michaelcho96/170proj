@@ -5,6 +5,7 @@ from utils import format_output_cycles
 #from greedy_solution import greedy_algorithm
 #from random_algorithm import random_algorithm
 from utils import validate_formatted_solution
+from random_algorithm_2 import random_algorithm_2
 #from utils import simple_k_cycles
 
 def test_find_cycles1():
@@ -106,13 +107,32 @@ def test_validate_formatted_solution():
 	solution = "1 2; 3 4 5; 8 6; 7"
 	print(validate_formatted_solution(solution))	
 
+def test_shortest_paths():
+	G = nx.DiGraph()
+	G.add_nodes_from([0,1,2,3,4,5])
+	G.add_edges_from([[0,1],[1,2],[2,0],[3,4],[4,5],[5,3]])
+	cycle = nx.shortest_path(G, source=0, target=2)
+	for node in cycle:
+		print(node)
+
+def test_random_algorithm_2():
+	G= nx.DiGraph()
+	G.add_nodes_from([0,1,2,3,4,5])
+	G.add_edges_from([[0,1],[1,2],[2,0],[3,4],[4,5],[5,3]])
+	for node in range(0,6):
+		G.node[node]['penalty'] = 1
+	solution = random_algorithm_2(G)
+	print("Penalty: " + str(solution[1]))
+	print("Cycles: " + solution[0])
+
 #test_greedy_algorithm()
 #test_construct_cluster_graph()
 #test_simple_k_cycles()
 #test_find_cycles3()
 #test_random_algorithm()
-test_validate_formatted_solution()
-
+#test_validate_formatted_solution()
+#test_shortest_paths()
+test_random_algorithm_2()
 
 
 
