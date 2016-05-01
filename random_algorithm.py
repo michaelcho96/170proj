@@ -3,6 +3,7 @@ from utils import find_total_penalty
 from utils import create_graph
 from utils import add_solutions
 
+"""DOES NOT WORK, FORGET TO CHECK CYCLE LENGTH"""
 def random_algorithm(input_graph):
 	G = input_graph.copy()
 	cycle_list = []
