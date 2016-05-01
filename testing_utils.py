@@ -139,7 +139,7 @@ def test_random_algorithm_2_2():
 	print("Cycles: " + solution[0])
 
 def test_random_algorithm_2_3():
-	filename = "instances/2.in"
+	filename = "instances/1.in"
 	G = create_graph(filename)
 	solution = random_algorithm_2(G)
 	print("Penalty: " + str(solution[1]))
@@ -157,7 +157,7 @@ def test_build_randomized_graph():
 	print(rand_G.edges())	
 
 def test_build_randomized_graph2():
-	filename = "instances/2.in"
+	filename = "instances/1.in"
 	G = create_graph(filename)
 	rand_G = build_randomized_graph(G)
 	print(rand_G.nodes())
@@ -170,8 +170,8 @@ def test_build_randomized_graph2():
 #test_random_algorithm()
 #test_validate_formatted_solution()
 #test_shortest_paths()
-#test_random_algorithm_2_3()
-test_build_randomized_graph()
+test_random_algorithm_2_3()
+#test_build_randomized_graph()
 
 
 
