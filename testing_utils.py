@@ -3,6 +3,7 @@ from utils import find_cycles
 from utils import construct_cluster_graph
 from utils import format_output_cycles
 from greedy_solution import greedy_algorithm
+from random_algorithm import random_algorithm
 #from utils import simple_k_cycles
 
 def test_find_cycles1():
@@ -75,19 +76,28 @@ def test_greedy_algorithm():
 def test_simple_k_cycles():
 	G = nx.DiGraph()
 	G.add_nodes_from([0,1,2,3,4,5,6])
-	G.add_edges_from9[(0,1),(1,2),(2,3),(3,4),(4,5),(5,6),(6,0)]
+	G.add_edges_from[(0,1),(1,2),(2,3),(3,4),(4,5),(5,6),(6,0)]
 	print("starting")
 	cycles_list = list(simple_k_cycles(G, 5))
 	print("done")
 	for cycle in cycles_list:	
 		print(cycle)
 
+def test_random_algorithm():
+	G= nx.Graph()
+	G.add_nodes_from([0,1,2,3,4,5])
+	G.add_edges_from([[0,1],[1,2],[2,0],[3,4],[4,5],[5,3]])
+	for node in range(0,6):
+		G.node[node]['penalty'] = 1
+	cycles_list = random_algorithm(G)
+	for cycle in cycles_list:
+		print(cycle)
 
 #test_greedy_algorithm()
 #test_construct_cluster_graph()
 #test_simple_k_cycles()
-test_find_cycles3()
-
+#test_find_cycles3()
+test_random_algorithm()
 
 
 
