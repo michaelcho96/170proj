@@ -168,7 +168,7 @@ def validate_formatted_solution(solution):
         cycle = []
         node_token = node_tokens.split(" ")
         for node in node_token:
-            if node != '':
+            if node != '' and node != '\n':
                 if int(node) in used_nodes:
                     print("repeat node")
                     return False
