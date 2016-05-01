@@ -2,6 +2,7 @@ import networkx as nx
 from utils import find_total_penalty
 from utils import create_graph
 from utils import add_solutions
+from utils import format_output_cycles
 
 """DOES NOT WORK, FORGET TO CHECK CYCLE LENGTH"""
 def random_algorithm(input_graph):
@@ -21,14 +22,16 @@ def random_algorithm(input_graph):
 			print("No cycle found")
 			break	
 	penalty = find_total_penalty(input_graph) - pre_penalty
-	return [cycle_list, penalty]
+	formatted_cycle_list = format_output_cycles(cycle_list)
+	return [formatted_cycle_list, penalty]
 
 def execute_random(index):
 	filename = "instances/" + str(index) + ".in"
 	G = create_graph(filename)
 	solution = random_algorithm(G)
 	formatted_solution = [index, "Random", solution[1], solution[0]]
-	list_solutions = [formatted_solution]
+	print(solution[0])
+	list_solutions = [formatted_solution,]
 	add_solutions(list_solutions)
 
 def run_on_all_instances():

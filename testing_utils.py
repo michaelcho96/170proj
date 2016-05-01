@@ -2,8 +2,9 @@ import networkx as nx
 from utils import find_cycles
 from utils import construct_cluster_graph
 from utils import format_output_cycles
-from greedy_solution import greedy_algorithm
-from random_algorithm import random_algorithm
+#from greedy_solution import greedy_algorithm
+#from random_algorithm import random_algorithm
+from utils import validate_formatted_solution
 #from utils import simple_k_cycles
 
 def test_find_cycles1():
@@ -93,12 +94,24 @@ def test_random_algorithm():
 	for cycle in cycles_list:
 		print(cycle)
 
+def test_validate_formatted_solution():
+	solution = "1 2 3 4"
+	print(validate_formatted_solution(solution))
+	solution = "1 2; 3 4 5 6 7"
+	print(validate_formatted_solution(solution))
+	solution = "1 2; 3 4 5; 6 7 8 9 10 11"
+	print(validate_formatted_solution(solution))
+	solution = "1 2; 3 4 5; 5 6; 7"
+	print(validate_formatted_solution(solution))
+	solution = "1 2; 3 4 5; 8 6; 7"
+	print(validate_formatted_solution(solution))	
+
 #test_greedy_algorithm()
 #test_construct_cluster_graph()
 #test_simple_k_cycles()
 #test_find_cycles3()
-test_random_algorithm()
-
+#test_random_algorithm()
+test_validate_formatted_solution()
 
 
 

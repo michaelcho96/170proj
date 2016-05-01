@@ -32,6 +32,7 @@ def greedy_algorithm(G):
 		list_cycles.append(CG_copy.node[cluster]['nodes'])
 	penalty = find_total_penalty(G) - pre_penalty
 	output_string = format_output_cycles(list_cycles)
+	print(output_string)
 	return [output_string, penalty]
 	
 def find_max_penalty(node_list, CG):

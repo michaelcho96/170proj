@@ -160,6 +160,29 @@ def find_total_penalty(G):
 def add_solutions(list_solutions):
     write_file(list_solutions)
 
+def validate_formatted_solution(solution):
+    cycle_list = []
+    used_nodes = []
+    cycle_tokens = solution.split(";")
+    for node_tokens in cycle_tokens:
+        cycle = []
+        node_token = node_tokens.split(" ")
+        for node in node_token:
+            if node != '':
+                if int(node) in used_nodes:
+                    print("repeat node")
+                    return False
+                cycle.append(int(node))
+                used_nodes.append(int(node))
+        if len(cycle) < 2:
+            print("cycle of length 1")
+            return False
+        cycle_list.append(cycle)
+    for cycle in cycle_list:
+        if len(cycle) > 5:
+            return False
+    return True
+
 def simple_k_cycles(G, k):
     """Find simple cycles (elementary circuits) of a directed graph.
     An simple cycle, or elementary circuit, is a closed path where no

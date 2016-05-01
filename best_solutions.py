@@ -32,8 +32,8 @@ def write_file(list_solutions):
 		new_solution = solution[3]
 		list_tokens = data[instance_number - 1].split("|")
 		prev_penalty = int(list_tokens[1])
-		if penalty < prev_penalty:
-			data[instance_number - 1] = str(instance_number) + ": " + algorithm_name + "; Penalty|" + str(penalty) + "|;" + str(new_solution) + "\n"
+		if penalty <= prev_penalty:
+			data[instance_number - 1] = str(instance_number) + ": " + algorithm_name + ", Penalty|" + str(penalty) + "| " + new_solution + "\n"
 	output_file = open(filename, "w")
 	output_file.writelines(data)
 
