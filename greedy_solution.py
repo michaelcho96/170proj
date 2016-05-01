@@ -6,6 +6,7 @@ from utils import create_graph
 from utils import add_solutions
 import multiprocessing
 import time
+import sys
 
 def greedy_algorithm(G):
 	CG = construct_cluster_graph(G)
@@ -14,7 +15,8 @@ def greedy_algorithm(G):
 	selected_clusters = []
 	pre_penalty = 0
 	while len(valid_nodes) != 0:
-		node_selected = find_max_penalty(valid_nodes, CG)
+		# node_selected = find_max_penalty(valid_nodes, CG)
+		node_selected = find_min_weighted_degree(valid_nodes, CG)
 		pre_penalty += CG.node[node_selected]['penalty']
 		selected_clusters.append(node_selected)
 		list_edges = CG.edges(node_selected, False)
@@ -41,6 +43,27 @@ def find_max_penalty(node_list, CG):
 			max_penalty = penalty
 			max_node = node
 	return max_node
+
+def find_min_weighted_degree(node_list, CG):
+	min_weighted_degree = sys.maxsize
+	selected_node = None
+	for node in node_list:
+		penalty = CG.node[node]['penalty']
+		neighbor_penalty = 0
+		list_edges = CG.edges(node, False)
+		neighbors = set()
+		for edge in list_edges:
+			if edge[0] is not node:
+				neighbors.add(edge[0])
+			if edge[1] is not node:
+				neighbors.add(edge[1])
+		for n in neighbors:
+			neighbor_penalty += CG.node[n]['penalty']
+		weighted_degree = neighbor_penalty/penalty
+		if weighted_degree < min_weighted_degree:
+			min_weighted_degree = weighted_degree
+			selected_node = node
+	return selected_node
 
 def execute_greedy(index):
 	filename = "instances/" + str(index) + ".in"
