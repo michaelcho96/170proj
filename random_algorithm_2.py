@@ -3,6 +3,7 @@ from utils import find_total_penalty
 from utils import create_graph
 from utils import add_solutions
 from utils import format_output_cycles
+from random import shuffle
 
 """ We repeatedly find valid cycles within G, removing them from the
 	graph until there are no more cycles. We use those cycles as our
@@ -12,14 +13,16 @@ def random_algorithm_2(input_graph):
 	G = input_graph.copy()
 	cycle_list = []
 	pre_penalty = 0
-	while G.nodes():
-		source_node = G.nodes()[0]
-		cycle = find_cycle(G, source_node)
+	rand_G = build_randomized_graph(input_graph)
+	while randG.nodes():
+		source_node = randG.nodes()[0]
+		cycle = find_cycle(randG, source_node)
 		if cycle == []:
-			G.remove_node(source_node)
+			randG.remove_node(source_node)
 		else:
 			cycle_list.append(cycle)
 			for node in cycle:
+
 				pre_penalty += G.node[node]['penalty']
 				G.remove_node(node)
 	penalty = find_total_penalty(input_graph) - pre_penalty
@@ -48,3 +51,32 @@ def find_edges_to_node(G, source_node):
 		if target == source_node:
 			list_edges.append(edge)
 	return list_edges
+
+""" Creates a dictionary which maps randomized nodes(int) to originalnode(int).
+	The key is the shuffled node, the value is the original node. """
+def randomize_graph(G):
+	node_list = G.nodes()
+	print(node_list)
+	shuffled_node_list = list(node_list)
+	shuffle(shuffled_node_list)
+	print(shuffled_node_list)
+	node_dict = {}
+	orginal_dict = {}
+	for index in range(0, len(node_list)):
+		node_dict[shuffled_node_list[index]] = node_list[index]
+	for node in node_list:
+		orginal_dict[node] = shuffled_node_list.index(node)
+	return [node_dict, orginal_dict]
+
+def build_randomized_graph(input_graph):
+	dictionaries = randomize_graph(input_graph)
+	original_dict = dictionaries[1]
+	G = nx.DiGraph()
+	for key in original_dict.keys():
+		G.add_node(original_dict[key])
+	for key in original_dict.keys():
+		for edge in input_graph.edges(key, False):
+			print("Adding edge: (" + str(original_dict[edge[0]]) + ", " + str(original_dict[edge[1]]) + ")")
+			G.add_edge(original_dict[edge[0]], original_dict[edge[1]])
+	return G
+
