@@ -13,19 +13,21 @@ def random_algorithm_2(input_graph):
 	cycle_list = []
 	pre_penalty = 0
 	while G.nodes():
-		cycle = find_cycle(G)
-		cycle_list.append(cycle)
-		for node in cycle:
-			pre_penalty += G.node[node]['penalty']
-			G.remove_node(node)
+		source_node = G.nodes()[0]
+		cycle = find_cycle(G, source_node)
+		if cycle == []:
+			G.remove_node(source_node)
+		else:
+			cycle_list.append(cycle)
+			for node in cycle:
+				pre_penalty += G.node[node]['penalty']
+				G.remove_node(node)
 	penalty = find_total_penalty(input_graph) - pre_penalty
 	formatted_cycle_list = format_output_cycles(cycle_list)
 	return [formatted_cycle_list, penalty]
 
-def find_cycle(G):
-	# Uses first node as node
-	node = G.nodes()[0]
-	list_edges = find_edges_to_node(G, node)
+def find_cycle(G, source_node):
+	list_edges = find_edges_to_node(G, source_node)
 	for edge in list_edges:
 		source = edge[1]
 		target = edge[0]
