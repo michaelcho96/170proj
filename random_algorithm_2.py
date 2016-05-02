@@ -44,7 +44,7 @@ def find_cycle(G, source_node):
 			if not len(cycle) > 5:
 				return cycle
 		except:
-			print("no cycle.")
+			pass
 	return []
 
 
