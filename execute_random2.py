@@ -42,7 +42,7 @@ def run_on_all_instances(name):
 		solved = write_zero_penalty_list(file_a)
 		print(solved)
 		print("{0} instances with penalty 0!".format(str(len(solved))))
-		for instance in range(1, 11):
+		for instance in range(1, 493):
 			if str(instance) not in solved:
 				print("\nProcessing input {0} on iteration {1}".format(str(instance), str(i)))
 				min_penalty = 9999

@@ -53,6 +53,19 @@ def create_graph(instance):
         # print("num edges: " + str(len(nx.edges(g))))
     return g
 
+def do_not_test_list(input_f):
+    out_set = set([])
+    out_set.add(1)
+    with open(input_f) as in_f:
+        for i in range(0,492):
+            split_line = read_solution_line(in_f.readline())
+            if split_line[2] == 0:
+                out_list.add(i + 1)
+            elif split_line[3].strip() == "":
+                out_list.add(i + 1)
+    return out_set
+
+
         
 """ Constructs an undirected graph of all valid cycles, with an edge between two nodes
    of the graph if the underlying cycles share at least one vertex """
