@@ -1,7 +1,7 @@
 from utils import comprehensive_solution_validation
 from utils import create_graph
 
-file = open("SOLUTIONS RECORDS.txt", "r")
+file = open("COMBINED SOLUTIONS", "r")
 data = file.readlines()
 for line in data:
 	tokens = line.split("|")
