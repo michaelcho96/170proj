@@ -178,7 +178,7 @@ def validate_formatted_solution(solution):
                     return False
                 cycle.append(int(node))
                 used_nodes.append(int(node))
-        if len(cycle) < 2:
+        if len(cycle) == 1:
             print("cycle of length 1")
             return False
         cycle_list.append(cycle)
