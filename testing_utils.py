@@ -11,6 +11,8 @@ from random import shuffle
 from random_algorithm_2 import build_randomized_graph
 from utils import contains_edge
 from utils import comprehensive_solution_validation
+from utils import solved_instance_list
+from utils import condensed_list
 #from utils import simple_k_cycles
 
 def test_find_cycles1():
@@ -197,7 +199,11 @@ def test_comprehensive_solution_validation2():
 	solution = " 0 1 2; 3 4 5"
 	print(comprehensive_solution_validation(solution, G))
 
-test_comprehensive_solution_validation1()
+def test_condensed_list():
+	print(condensed_list(solved_instance_list))
+
+test_condensed_list()
+#test_comprehensive_solution_validation1()
 #test_contains_edge()
 #test_greedy_algorithm()
 #test_construct_cluster_graph()

@@ -6,6 +6,12 @@ import signal
 from best_solutions import write_file
 from collections import defaultdict
 
+solved_instance_list = [1, 3, 5, 6, 9, 10, 21, 23, 25, 27, 28, 31, 32, 33, 36, 41, 42, 43,
+                        44, 52, 55, 64, 67, 72, 77, 78, 80, 82, 86, 92, 95, 96, 97, 99, 100,
+                        101, 112, 115, 116, 119, 121, 142, 152, 163, 174, 186, 192, 199, 214,
+                        223, 231, 233, 245, 247, 265, 267, 272, 275, 278, 280, 294, 298, 300,
+                        309, 326, 328, 337, 342, 355, 362, 364, 375, 376, 385, 410, 425, 428,
+                        444, 447, 450, 452, 466, 471, 473, 488]
 
 class TimeoutError(Exception):
     pass
@@ -217,6 +223,12 @@ def contains_edge(G, input_edge):
             return True
     return False
 
+def condensed_list(solved_instance_list):
+    instance_list = []
+    for index in range(1,293):
+        if not index in solved_instance_list:
+            instance_list.append(index)
+    return instance_list
 
 def simple_k_cycles(G, k):
     """Find simple cycles (elementary circuits) of a directed graph.
