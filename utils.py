@@ -1,6 +1,8 @@
 import networkx as nx
 from functools import wraps
 import errno
+import os.path
+import io
 import os
 import signal
 from shutil import copyfile
@@ -147,14 +149,14 @@ def update_sol_list(base, new, log="log.txt"):
                     with open(new, "r") as new_f:
                         data_a = base_f.readlines()
                         data_b = new_f.readlines()
-                        log_lines = logf.readlines()
+                        # log_lines = logf.readlines()
                         for i in range(0,492):
                             line_a = read_solution_line(data_a[i])
                             line_b = read_solution_line(data_b[i])
                             if line_a[2] < line_b[2]:
-                                print("Updating solution for instance {0} from {1} to {2}".format(str(index + 1), line_b[2], line_a[2]))
-                                new_logline = log_lines[i] + str(line_a[2])
-                                new_log.write(new_logline)
+                                print("Updating solution for instance {0} from {1} to {2}".format(str(i + 1), line_b[2], line_a[2]))
+                                # new_logline = log_lines[i] + str(line_a[2])
+                                # new_log.write(new_logline)
                                 out_f.write(data_a[i]) 
                                 num_updated += 1
                             else:
@@ -217,7 +219,7 @@ def read_solution_line(line):
     return [instance_number, algorithm_type, penalty, solution]
 
 def add_solutions(list_solutions, out_file="DEFAULT_OUT"):
-    write_file(out_file, list_solutions)
+    write_file(list_solutions, out_file)
 
 def validate_formatted_solution(solution):
     cycle_list = []
