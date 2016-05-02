@@ -7,16 +7,20 @@ from utils import combine
 from utils import update_sol_list
 from utils import *
 
-def execute_random2(index):
+def execute_random2(index, graphs):
 	"""
 	Executes random_algorithm_2 and returns a formatted solution.
 	*** NO LONGER WRITES TO SOLUTION FILE ***
 	"""
 	filename = "instances/" + str(index) + ".in"
-	G = create_graph(filename)
+	if index not in graphs:
+		G = create_graph(filename)
+		graphs[index] = G
+	else:
+		G = graphs[index]
 	solution = random_algorithm_2(G)
 	formatted_solution = [index, "Random", solution[1], solution[0]]
-	return formatted_solution
+	return formatted_solution, graphs
 	# list_solutions = [formatted_solution,]
 	# add_solutions(list_solutions)
 
@@ -34,6 +38,7 @@ def run_repeat_safe():
 	file_b = "SOLUTIONS RECORDS - M.txt"
 	i = 0
 	updated_instances = 0
+	graphs = {}
 	try:
 		while True:
 			i+= 1
@@ -49,7 +54,7 @@ def run_repeat_safe():
 					curr_best = None
 					for index in range (0,30):
 						print(".", end="")
-						form_sol = execute_random2(instance)
+						form_sol, graphs = execute_random2(instance, graphs)
 						penalty = form_sol[2] 
 						if penalty < min_penalty:
 							min_penalty = penalty
@@ -70,6 +75,7 @@ def run_repeat_fast():
 	i = 0
 	updated_instances = 0
 	sol_list = []
+	graphs = {}
 	try:
 		while True:
 			i+= 1
@@ -85,7 +91,7 @@ def run_repeat_fast():
 					curr_best = None
 					for index in range (0,30):
 						print(".", end="")
-						form_sol = execute_random2(instance)
+						form_sol, graphs = execute_random2(instance, graphs)
 						if instance == 12: 
 							print("doing something")
 						penalty = form_sol[2] 
