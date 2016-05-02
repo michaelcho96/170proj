@@ -61,7 +61,7 @@ def run_repeat_safe():
 							curr_best = form_sol
 							if min_penalty == 0:
 								break
-					add_solutions(file_b, [curr_best,])
+					add_solutions([curr_best,], file_b)
 			print("Updating {0} with {1}...".format(file_a, file_b))
 			updated_instances += update_sol_list(file_a, file_b)
 			print("Updating condensed solutions...")
@@ -103,7 +103,7 @@ def run_repeat_fast():
 								break
 					sol_list.append(curr_best)
 			print("Addng all solutions...")
-			add_solutions(sol_list)
+			add_solutions(sol_list, file_b)
 			print("Updating {0} with {1}...".format(file_a, file_b))
 			updated_instances += update_sol_list(file_a, file_b)
 			print("Updating condensed solutions...")
