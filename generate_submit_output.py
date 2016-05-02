@@ -7,7 +7,6 @@ for line in data:
 	info = read_solution_line(line)
 	solution = info[3]
 	if solution.isspace():
-		print("No solution")
 		write_file.write("None\n")
 	else:
 		solution = solution[1:]
