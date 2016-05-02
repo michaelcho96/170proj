@@ -11,8 +11,9 @@ from random import shuffle
 from random_algorithm_2 import build_randomized_graph
 from utils import contains_edge
 from utils import comprehensive_solution_validation
-from utils import solved_instance_list
+#from utils import solved_instance_list
 from utils import condensed_list
+from random_algorithm_4 import random_algorithm_4
 #from utils import simple_k_cycles
 
 def test_find_cycles1():
@@ -183,7 +184,6 @@ def test_contains_edge():
 	print(contains_edge(G, (5,3)))
 
 def test_comprehensive_solution_validation1():
-	line = "2: Random, Penalty|14| 30 14 15 36; 50 45 33 38 32; 31 49 37; 24 13 35; 22 10 26 16 5; 18 1 0; 4 3 21; 27 17 11; 23 34 28 12; 40 39 46; 19 2 8"
 	tokens = line.split("|")
 	number_tokens = line.split(":")
 	instance_number = int(number_tokens[0])
@@ -202,7 +202,35 @@ def test_comprehensive_solution_validation2():
 def test_condensed_list():
 	print(condensed_list(solved_instance_list))
 
-test_condensed_list()
+def test_random_algorithm_4():
+	G= nx.DiGraph()
+	G.add_nodes_from([0,1,2,3,4,5])
+	G.add_edges_from([[0,1],[1,2],[2,0],[3,4],[4,5],[5,3]])
+	for node in range(0,6):
+		G.node[node]['penalty'] = 1
+	solution = random_algorithm_4(G)
+	print("Penalty: " + str(solution[1]))
+	print("Cycles: " + solution[0])
+
+def test_random_algorithm_4_2():
+	G= nx.DiGraph()
+	G.add_nodes_from([0,1,2,3,4,5])
+	G.add_edges_from([[0,1],[1,2],[2,3],[3,4],[4,5],[5,0]])
+	for node in range(0,6):
+		G.node[node]['penalty'] = 1
+	solution = random_algorithm_4(G)
+	print("Penalty: " + str(solution[1]))
+	print("Cycles: " + solution[0])
+
+def test_random_algorithm_4_3():
+	filename = "instances/1.in"
+	G = create_graph(filename)
+	solution = random_algorithm_4(G)
+	print("Penalty: " + str(solution[1]))
+	print("Cycles: " + solution[0])
+	print(validate_formatted_solution(solution[0]))
+
+#test_condensed_list()
 #test_comprehensive_solution_validation1()
 #test_contains_edge()
 #test_greedy_algorithm()
@@ -212,8 +240,9 @@ test_condensed_list()
 #test_random_algorithm()
 #test_validate_formatted_solution()
 #test_shortest_paths()
-# test_random_algorithm_2_3()
+#test_random_algorithm_2_3()
 #test_build_randomized_graph()
+test_random_algorithm_4_3()
 
 
 
