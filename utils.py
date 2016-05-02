@@ -133,27 +133,33 @@ def combine(a, b):
         else:
             out_f.write(data_b[index])
 
-def update_sol_list(base, new):
+def update_sol_list(base, new, log="log.txt"):
     """
     base = old file you want to be updated
     new = new instances to be checked against base
     """
     num_updated = 0
-    with open("new_best.tmp", "w") as out_f:
-        with open(base, "r") as base_f:
-            with open(new, "r") as new_f:
-                data_a = base_f.readlines()
-                data_b = new_f.readlines()
-                for index in range(0,492):
-                    line_a = read_solution_line(data_a[index])
-                    line_b = read_solution_line(data_b[index])
-                    if line_a[2] < line_b[2]:
-                        print("Updating solution for instance {0} from {1} to {2}".format(str(index + 1), line_b[2]))
-                        out_f.write(data_a[index])
-                        num_updated += 1
-                    else:
-                        out_f.write(data_b[index])
+    with open(log, "r") as logf:
+        with open("log.tmp", "w") as new_log:
+            with open("new_best.tmp", "w") as out_f:
+                with open(base, "r") as base_f:
+                    with open(new, "r") as new_f:
+                        data_a = base_f.readlines()
+                        data_b = new_f.readlines()
+                        log_lines = logf.readlines()
+                        for i in range(0,492):
+                            line_a = read_solution_line(data_a[i])
+                            line_b = read_solution_line(data_b[i])
+                            if line_a[2] < line_b[2]:
+                                print("Updating solution for instance {0} from {1} to {2}".format(str(index + 1), line_b[2], line_a[2]))
+                                new_logline = log_lines[i] + str(line_a[2])
+                                new_log.write(new_logline)
+                                out_f.write(data_a[i]) 
+                                num_updated += 1
+                            else:
+                                out_f.write(data_b[i])
     copyfile("new_best.tmp", base)
+    copyfile("log.tmp", log)
     return num_updated
 
 
@@ -209,7 +215,7 @@ def read_solution_line(line):
     solution = solution.replace('', "")
     return [instance_number, algorithm_type, penalty, solution]
 
-def add_solutions(out_file="DEFAULT_OUT",list_solutions):
+def add_solutions(list_solutions, out_file="DEFAULT_OUT"):
     write_file(out_file, list_solutions)
 
 def validate_formatted_solution(solution):
