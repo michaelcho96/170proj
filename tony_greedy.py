@@ -27,7 +27,7 @@ def greedy_algorithm(G):
 	valid_nodes = CG.nodes()
 	selected_clusters = []
 	pre_penalty = 0
-	cg_penalty = 0
+	# cg_penalty = 0
 	while len(valid_nodes) != 0:
 		# node_selected = find_max_penalty(valid_nodes, CG)
 		node_selected = find_min_weighted_degree(valid_nodes, CG)
@@ -38,21 +38,21 @@ def greedy_algorithm(G):
 		list_edges = CG.edges(node_selected, False)
 		nodes_to_remove = set()
 		nodes_to_remove.add(node_selected)
-		print len(list_edges)
+		# print len(list_edges)
 		for edge in list_edges:
-			nodes_to_remove.add(edge[0])
 			assert (edge[0] == node_selected)
 			nodes_to_remove.add(edge[1])
 		for node in nodes_to_remove:
 			valid_nodes.remove(node)
-			cg_penalty += CG_copy.node[node]['penalty']
+			# cg_penalty += CG_copy.node[node]['penalty']
 			CG.remove_node(node)
 	list_cycles = []
 	for cluster in selected_clusters:
 		list_cycles.append(CG_copy.node[cluster]['nodes'])
 	penalty = find_total_penalty(G) - pre_penalty
 	output_string = format_output_cycles(list_cycles)
-	print(find_total_penalty(G), pre_penalty, cg_penalty, penalty)
+	# print(find_total_penalty(G), pre_penalty, cg_penalty, penalty)
+	print [output_string, penalty]
 	return [output_string, penalty]
 	
 def find_max_penalty(node_list, CG):
@@ -99,7 +99,7 @@ def find_min_weighted_degree(node_list, CG):
 		if weighted_degree < min_weighted_degree:
 			min_weighted_degree = weighted_degree
 			selected_node = node
-	print selected_node, CG.node[selected_node]['penalty'], min_weighted_degree, "|"
+	# print selected_node, CG.node[selected_node]['penalty'], min_weighted_degree, "|"
 	return selected_node
 
 def execute_greedy(index):
@@ -108,7 +108,7 @@ def execute_greedy(index):
 	solution = greedy_algorithm(G)
 	formatted_solution = [index, "Greedy", solution[1], solution[0]]
 	list_solutions = [formatted_solution]
-	outfile = "SOLUTION_RECORDS_TONY.TXT"
+	outfile = "SOLUTIONS RECORDS - T.txt"
 	add_solutions(list_solutions, outfile)
 
 def construct_cluster_graph(input_graph):
@@ -124,10 +124,9 @@ def construct_cluster_graph(input_graph):
 		cycle = find_cycle(G, source_node)
 		if cycle != []:
 			penalty = 0
-			i = 0
 			for node in cycle:
 			    penalty += G.node[node]['penalty']
-			    i += 1
+			    # G.remove_node(node)
 			CGraph.add_node(counter, penalty= penalty, nodes=cycle)
 			counter += 1
 		G.remove_node(source_node)
@@ -171,7 +170,7 @@ def find_edges_to_node(G, source_node):
 def timed_execution():
 	if __name__ == '__main__':
     	# Start foo as a process
-		for index in range(18,20):
+		for index in range(180,493):
 			if index in solved_instance_list:
 				continue
 			print("Processing input " + str(index) + ".")
