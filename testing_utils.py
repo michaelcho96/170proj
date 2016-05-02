@@ -2,7 +2,7 @@ import networkx as nx
 from utils import find_cycles
 from utils import construct_cluster_graph
 from utils import format_output_cycles
-#from greedy_solution import greedy_algorithm
+from greedy_solution import greedy_algorithm
 #from random_algorithm import random_algorithm
 from utils import validate_formatted_solution
 from random_algorithm_2 import random_algorithm_2
@@ -163,14 +163,14 @@ def test_build_randomized_graph2():
 	print(rand_G.nodes())
 	print(rand_G.edges())
 
-#test_greedy_algorithm()
+test_greedy_algorithm()
 #test_construct_cluster_graph()
 #test_simple_k_cycles()
 #test_find_cycles3()
 #test_random_algorithm()
 #test_validate_formatted_solution()
 #test_shortest_paths()
-test_random_algorithm_2_3()
+# test_random_algorithm_2_3()
 #test_build_randomized_graph()
 
 
