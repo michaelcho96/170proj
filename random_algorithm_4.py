@@ -4,7 +4,7 @@ from utils import create_graph
 from utils import add_solutions
 from utils import format_output_cycles
 from random import shuffle
-from random import randint
+import random
 
 """ We repeatedly find valid cycles within G, removing them from the
 	graph until there are no more cycles. We use those cycles as our
@@ -19,6 +19,7 @@ def random_algorithm_4(input_graph):
 	nodes_dict = random_result[1]
 	while randG.nodes():
 		source_node = randG.nodes()[0]
+		print("Finding cycles for node " + str(source_node))
 		cycle = find_random_length_cycle(randG, source_node)
 		if cycle == []:
 			randG.remove_node(source_node)
@@ -34,6 +35,37 @@ def random_algorithm_4(input_graph):
 	penalty = find_total_penalty(input_graph) - pre_penalty
 	formatted_cycle_list = format_output_cycles(cycle_list)
 	return [formatted_cycle_list, penalty]
+
+def find_random_length_cycle(G, root_node):
+	print("Finding cycle")
+	cycle = []
+	list_edges = find_edges_to_node(G, root_node)
+	for edge in list_edges:
+		source = edge[1]
+		target = edge[0]
+		try:
+			cycle = nx.shortest_path(G, source=source, target=target)
+			print(cycle)
+			if len(cycle) > 5:
+				cycle = []
+			elif len(cycle) == 5:
+				return cycle
+			# If the cycle has less than five edges, we try to increase the number of
+			# edges in the cycle by removing a random edge
+			elif len(cycle) < 5:
+				copyG = G.copy()	
+				change = random.randint(0,1)
+				print(change)
+				copy_cycle = list(cycle)
+				while change:
+					cycle = change_cycle(copyG, source, target)
+				#If altering the graph return no cycle, we revert the cycle
+				if not cycle:
+					cycle = copy_cycle
+				return cycle
+		except:
+			pass
+	return cycle
 
 def find_edges_to_node(G, source_node):
 	list_edges = []
@@ -68,33 +100,6 @@ def build_randomized_graph(input_graph):
 		for edge in input_graph.edges(key, False):
 			G.add_edge(original_dict[edge[0]], original_dict[edge[1]])
 	return [G, dictionaries[0]]
-
-def find_random_length_cycle(input_graph, root_node):
-	cycle = []
-	G = input_graph.copy()
-	list_edges = find_edges_to_node(input_graph, root_node)
-	list_nodes = []
-	for edge in list_edges:
-		source = edge[1]
-		target = edge[0]
-		try:
-			cycle = nx.shortest_path(G, source=source, target=target)
-			if len(cycle) > 5:
-				cycle = []
-			# If the cycle has less than five edges, we try to increase the number of
-			# edges in the cycle by removing a random edge
-			elif len(cycle) < 5:
-				copyG = G.copy()	
-				change_cycle = random.randint(0,1)
-				copy_cycle = list(cycle)
-				while change_cycle:
-					cycle = change_cycle(copyG, source, target)
-				#If altering the graph return no cycle, we revert the cycle
-				if not cycle:
-					cycle = copy_cycle
-		except:
-			pass
-	return cycle
 
 def change_cycle(G, cycle, source, target):
 	new_cycle = []
