@@ -1,0 +1,1 @@
+Raphael Yuster, Uri Zwick: Finding Even Cycles Even Faster. SIAM J. Discrete Math. 10(2): 209-222 (1997)
