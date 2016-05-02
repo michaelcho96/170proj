@@ -8,22 +8,21 @@ from shutil import copyfile
 	The instance_number should be an INT, algorithm_name should be a STRING, penalty should be 
 	an INT, and new_solution should be a STRING in standard form. """
 
-def write_file(list_solutions):
-	filename = "SOLUTIONS RECORDS - M.txt"
-	backup_filename = "SOLUTIONS RECORDS - M.bak"
-	file_exists = os.path.exists(filename) 
+def write_file(output_file, list_solutions):
+	backup_filename = output_file + ".bak"
+	file_exists = os.path.exists(output_file) 
 	data = []
 	for index in range(0, 492):
 		data.append(None)
 	record_file = None
 	if file_exists:
 		# print("FILE ALREADY EXISTS. OVERWRITING.")
-		copyfile(filename, backup_filename)
-		file = open(filename, "r")
+		copyfile(output_file, backup_filename)
+		file = open(output_file, "r")
 		data = file.readlines() 
 	else:
 		for instance in range(0,492):
-			record_file = open(filename, "w")
+			record_file = open(output_file, "w")
 			data[instance] = str(instance + 1) + ": No Algorithm; Penalty|" + str(9999) + "|; No Solution\n"
 	for solution in list_solutions:
 		instance_number = solution[0]
@@ -34,7 +33,7 @@ def write_file(list_solutions):
 		prev_penalty = int(list_tokens[1])
 		if penalty <= prev_penalty:
 			data[instance_number - 1] = str(instance_number) + ": " + algorithm_name + ", Penalty|" + str(penalty) + "| " + new_solution + "\n"
-	output_file = open(filename, "w")
+	output_file = open(output_file, "w")
 	output_file.writelines(data)
 
 # write_file([])
