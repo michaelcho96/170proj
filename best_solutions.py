@@ -9,8 +9,8 @@ from shutil import copyfile
 	an INT, and new_solution should be a STRING in standard form. """
 
 def write_file(list_solutions):
-	filename = "SOLUTIONS RECORDS.txt"
-	backup_filename = "SOLUTIONS RECORDS.bak"
+	filename = "SOLUTIONS RECORDS - M.txt"
+	backup_filename = "SOLUTIONS RECORDS - M.bak"
 	file_exists = os.path.exists(filename) 
 	data = []
 	for index in range(0, 492):
