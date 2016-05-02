@@ -116,22 +116,23 @@ def contains_edge(G, input_edge):
 def combine(a, b):
     """
     usage ex:
-    file_a = "SOLUTIONS RECORDS.txt"
-    file_b = "SOLUTIONS RECORDS - M.txt"
+    file_a = "SOLUTIONS RECORDS.txt" (usually original file)
+    file_b = "SOLUTIONS RECORDS - M.txt" (usually updated file)
     """
-    out_f = open("COMBINED SOLUTIONS", "w")
     file_a = open(a, "r")
     file_b = open(b, "r")
     data_a = file_a.readlines()
     data_b = file_b.readlines()
+    out_f = open("COMBINED SOLUTIONS", "w")
     for index in range(0,492):
         line_a = read_solution_line(data_a[index])
         line_b = read_solution_line(data_b[index])
-        if line_a[2] < line_b[2]:
-            print("Updating solution for instance {0} from {1} to {2}".format(str(index + 1), line_b[2]))
-            out_f.write(data_a[index])
-        else:
+        if line_a[2] > line_b[2]:
+            print("Updating solution for instance " + str(index + 1))
+            print("Penalty reduced from " + str(line_a[2]) + " to " + str(line_b[2]))
             out_f.write(data_b[index])
+        else:
+            out_f.write(data_a[index])
 
 def update_sol_list(base, new, log="log.txt"):
     """
