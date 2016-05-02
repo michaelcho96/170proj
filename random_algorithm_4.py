@@ -19,7 +19,6 @@ def random_algorithm_4(input_graph):
 	nodes_dict = random_result[1]
 	while randG.nodes():
 		source_node = randG.nodes()[0]
-		print("Finding cycles for node " + str(source_node))
 		cycle = find_random_length_cycle(randG, source_node)
 		if cycle == []:
 			randG.remove_node(source_node)
@@ -37,7 +36,6 @@ def random_algorithm_4(input_graph):
 	return [formatted_cycle_list, penalty]
 
 def find_random_length_cycle(G, root_node):
-	print("Finding cycle")
 	cycle = []
 	list_edges = find_edges_to_node(G, root_node)
 	for edge in list_edges:
@@ -45,7 +43,6 @@ def find_random_length_cycle(G, root_node):
 		target = edge[0]
 		try:
 			cycle = nx.shortest_path(G, source=source, target=target)
-			print(cycle)
 			if len(cycle) > 5:
 				cycle = []
 			elif len(cycle) == 5:
@@ -55,7 +52,6 @@ def find_random_length_cycle(G, root_node):
 			elif len(cycle) < 5:
 				copyG = G.copy()	
 				change = random.randint(0,1)
-				print(change)
 				copy_cycle = list(cycle)
 				while change:
 					cycle = change_cycle(copyG, source, target)
