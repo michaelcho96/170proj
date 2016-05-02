@@ -25,7 +25,7 @@ def execute_random2(index, graphs):
 	# add_solutions(list_solutions)
 
 def run_on_all_instances(name):
-	file_a = "UPDATED BEST RANDOM {0}.txt".format(name)
+	file_a = "UPDATED BEST RANDOM.txt".format(name)
 	file_b = "SOLUTIONS RECORDS - {0}.txt".format(name)
 	i = 0
 	updated_instances = 0
