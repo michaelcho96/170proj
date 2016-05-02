@@ -230,6 +230,21 @@ def condensed_list(solved_instance_list):
             instance_list.append(index)
     return instance_list
 
+def read_solution_line(line):
+    instance_tokens = line.split(":")
+    type_tokens = line.split(",")
+    tokens = line.split("|")
+    #Finding instance number
+    instance_number = int(instance_tokens[0])
+    #FInding algorithm
+    type_token2 = type_tokens[0].split(" ")
+    algorithm_type = type_token2[1]
+    #Finding penalty
+    penalty = int(tokens[1])
+    #Finding solution
+    solution = tokens[2]
+    return [instance_number, algorithm_type, penalty, solution]
+
 def simple_k_cycles(G, k):
     """Find simple cycles (elementary circuits) of a directed graph.
     An simple cycle, or elementary circuit, is a closed path where no

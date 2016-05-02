@@ -1,4 +1,4 @@
-read_file = open("SOLUTIONS RECORDS.txt", "r")
+read_file = open("COMBINED SOLUTIONS", "r")
 write_file = open("Condensed Solution Records", "w")
 data = read_file.readlines()
 for line in data:
