@@ -14,7 +14,7 @@ def execute_random2(index):
 
 def run_on_all_instances():
 	for instance in range(1,493):
-		if i not in solved_instance_list:
+		if instance not in solved_instance_list:
 			print("Processing input " + str(instance) + ".")
 			for index in range (0,30):
 				execute_random2(instance)
