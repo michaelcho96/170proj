@@ -17,7 +17,7 @@ def write_file(list_solutions):
 		data.append(None)
 	record_file = None
 	if file_exists:
-		print("FILE ALREADY EXISTS. OVERWRITING.")
+		# print("FILE ALREADY EXISTS. OVERWRITING.")
 		copyfile(filename, backup_filename)
 		file = open(filename, "r")
 		data = file.readlines() 

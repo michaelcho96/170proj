@@ -3,6 +3,7 @@ from functools import wraps
 import errno
 import os
 import signal
+from shutil import copyfile
 from best_solutions import write_file
 from collections import defaultdict
 
@@ -54,7 +55,7 @@ def create_graph(instance):
 """ Constructs an undirected graph of all valid cycles, with an edge between two nodes
    of the graph if the underlying cycles share at least one vertex """
 def construct_cluster_graph(G):
-    list_cycles = list(modified_simple_cycles(G))
+    list_cycles = list(nx.simple_cycles(G))
     # We build our secondary graph of cycles
     CGraph = nx.Graph()
     counter = 0
@@ -118,7 +119,7 @@ def combine(a, b):
     file_a = "SOLUTIONS RECORDS.txt"
     file_b = "SOLUTIONS RECORDS - M.txt"
     """
-    write_file = open("COMBINED SOLUTIONS", "w")
+    out_f = open("COMBINED SOLUTIONS", "w")
     file_a = open(a, "r")
     file_b = open(b, "r")
     data_a = file_a.readlines()
@@ -127,11 +128,34 @@ def combine(a, b):
         line_a = read_solution_line(data_a[index])
         line_b = read_solution_line(data_b[index])
         if line_a[2] < line_b[2]:
-            write_file.write(data_a[index])
+            print("Updating solution for instance {0} from {1} to {2}".format(str(index + 1), line_b[2]))
+            out_f.write(data_a[index])
         else:
-            write_file.write(data_b[index])
+            out_f.write(data_b[index])
 
-combine(file_a, file_b)
+def update_sol_list(base, new):
+    """
+    base = old file you want to be updated
+    new = new instances to be checked against base
+    """
+    num_updated = 0
+    with open("new_best.tmp", "w") as out_f:
+        with open(base, "r") as base_f:
+            with open(new, "r") as new_f:
+                data_a = base_f.readlines()
+                data_b = new_f.readlines()
+                for index in range(0,492):
+                    line_a = read_solution_line(data_a[index])
+                    line_b = read_solution_line(data_b[index])
+                    if line_a[2] < line_b[2]:
+                        print("Updating solution for instance {0} from {1} to {2}".format(str(index + 1), line_b[2]))
+                        out_f.write(data_a[index])
+                        num_updated += 1
+                    else:
+                        out_f.write(data_b[index])
+    copyfile("new_best.tmp", base)
+    return num_updated
+
 
 
 def write_condensed_solutions(input_f):
