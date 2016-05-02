@@ -1,6 +1,7 @@
 from random_algorithm_2 import random_algorithm_2
 from utils import create_graph
 from utils import add_solutions
+from utils import solved_instance_list
 
 def execute_random2(index):
 	filename = "instances/" + str(index) + ".in"
@@ -12,8 +13,9 @@ def execute_random2(index):
 
 def run_on_all_instances():
 	for instance in range(1,493):
-		print("Processing input " + str(instance) + ".")
-		for index in range (0,20):
-			execute_random2(instance)
+		if i not in solved_instance_list:
+			print("Processing input " + str(instance) + ".")
+			for index in range (0,20):
+				execute_random2(instance)
 
 run_on_all_instances()
