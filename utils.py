@@ -243,6 +243,8 @@ def read_solution_line(line):
     penalty = int(tokens[1])
     #Finding solution
     solution = tokens[2]
+    solution = solution.replace('\n', "")
+    solution = solution.replace('', "")
     return [instance_number, algorithm_type, penalty, solution]
 
 def simple_k_cycles(G, k):
