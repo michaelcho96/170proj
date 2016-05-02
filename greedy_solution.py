@@ -11,6 +11,7 @@ import sys
 def greedy_algorithm(G):
 	CG = construct_cluster_graph(G)
 	CG_copy = CG.copy()
+	print "done constructing"
 	valid_nodes = CG.nodes()
 	selected_clusters = []
 	pre_penalty = 0
@@ -21,6 +22,7 @@ def greedy_algorithm(G):
 		selected_clusters.append(node_selected)
 		list_edges = CG.edges(node_selected, False)
 		nodes_to_remove = set()
+		nodes_to_remove.add(node_selected)
 		for edge in list_edges:
 			nodes_to_remove.add(edge[0])
 			nodes_to_remove.add(edge[1])
@@ -32,7 +34,7 @@ def greedy_algorithm(G):
 		list_cycles.append(CG_copy.node[cluster]['nodes'])
 	penalty = find_total_penalty(G) - pre_penalty
 	output_string = format_output_cycles(list_cycles)
-	print(output_string)
+	print(find_total_penalty(G), pre_penalty)
 	return [output_string, penalty]
 	
 def find_max_penalty(node_list, CG):
@@ -77,12 +79,12 @@ def execute_greedy(index):
 def timed_execution():
 	if __name__ == '__main__':
     	# Start foo as a process
-		for index in range(85,493):
+		for index in range(1,493):
 			print("Processing input " + str(index) + ".")
 			p = multiprocessing.Process(target=execute_greedy, name="execute_greedy", args=(index,))	
 			p.start()
  			# Wait 10 seconds for foo
-			time.sleep(5)
+			time.sleep(3)
 			if p.is_alive():
 				print("Process " + str(index) + " still running. Killing.")
 				p.terminate()
