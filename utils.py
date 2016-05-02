@@ -181,6 +181,43 @@ def validate_formatted_solution(solution):
             return False
     return True
 
+def comprehensive_solution_validation(solution, G):
+    if not validate_formatted_solution(solution):
+        return False
+    else:
+        solution = solution.replace('\n', "")
+        solution = solution.replace('', "")
+        #print("solution: " + solution)
+        list_cycles = solution.split(";")
+
+        # Each token in tokens1 is a list of cycles
+        for cycle in list_cycles:
+            # each token in tokens2 is a node
+            nodes = cycle.split(" ")
+            list_nodes = []
+            for node in nodes:
+                if node != '' and node != '\n':
+                    list_nodes.append(node)
+            #print("list_nodes: " + str(list_nodes))
+            for index in range(0, len(list_nodes)):
+                edge_to_check = ()
+                if index == len(list_nodes) - 1:
+                    edge_to_check = (int(list_nodes[index]), int(list_nodes[0]))
+                else:
+                    edge_to_check = (int(list_nodes[index]), int(list_nodes[index + 1]))
+                #print("Checking: " + str(edge_to_check))
+                if not contains_edge(G, edge_to_check):
+                 #   print("Contains edge not in graph.")
+                    return False
+    return True
+
+def contains_edge(G, input_edge):
+    for edge in G.edges():
+        if edge == input_edge:
+            return True
+    return False
+
+
 def simple_k_cycles(G, k):
     """Find simple cycles (elementary circuits) of a directed graph.
     An simple cycle, or elementary circuit, is a closed path where no

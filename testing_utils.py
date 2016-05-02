@@ -2,13 +2,15 @@ import networkx as nx
 from utils import find_cycles
 from utils import construct_cluster_graph
 from utils import format_output_cycles
-from greedy_solution import greedy_algorithm
+#from greedy_solution import greedy_algorithm
 #from random_algorithm import random_algorithm
 from utils import validate_formatted_solution
 from random_algorithm_2 import random_algorithm_2
 from utils import create_graph
 from random import shuffle	
 from random_algorithm_2 import build_randomized_graph
+from utils import contains_edge
+from utils import comprehensive_solution_validation
 #from utils import simple_k_cycles
 
 def test_find_cycles1():
@@ -163,7 +165,41 @@ def test_build_randomized_graph2():
 	print(rand_G.nodes())
 	print(rand_G.edges())
 
-test_greedy_algorithm()
+def test_contains_edge():
+	G = nx.DiGraph()
+	G.add_nodes_from([0,1,2,3,4,5])
+	G.add_edges_from([[0,1],[1,2],[2,0],[3,4],[4,5],[5,3]])
+	print(contains_edge(G, (0,1)))
+	print(contains_edge(G, (1,0)))
+	print(contains_edge(G, (1,1)))
+	print(contains_edge(G, (5,6)))
+	print(contains_edge(G, (5,3)))
+	print(contains_edge(G, (1,2)))
+	print(contains_edge(G, (2,0)))
+	print(contains_edge(G, (3,4)))
+	print(contains_edge(G, (4,5)))
+	print(contains_edge(G, (5,3)))
+
+def test_comprehensive_solution_validation1():
+	line = "2: Random, Penalty|14| 30 14 15 36; 50 45 33 38 32; 31 49 37; 24 13 35; 22 10 26 16 5; 18 1 0; 4 3 21; 27 17 11; 23 34 28 12; 40 39 46; 19 2 8"
+	tokens = line.split("|")
+	number_tokens = line.split(":")
+	instance_number = int(number_tokens[0])
+	solution = tokens[2]
+	filename = "instances/" + str(instance_number) + ".in"
+	G = create_graph(filename)
+	print(comprehensive_solution_validation(solution, G))
+
+def test_comprehensive_solution_validation2():
+	G = nx.DiGraph()
+	G.add_nodes_from([0,1,2,3,4,5])
+	G.add_edges_from([[0,1],[1,2],[2,0],[3,4],[4,5],[5,3]])
+	solution = " 0 1 2; 3 4 5"
+	print(comprehensive_solution_validation(solution, G))
+
+test_comprehensive_solution_validation1()
+#test_contains_edge()
+#test_greedy_algorithm()
 #test_construct_cluster_graph()
 #test_simple_k_cycles()
 #test_find_cycles3()
