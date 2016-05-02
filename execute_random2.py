@@ -25,17 +25,15 @@ def execute_random2(index, graphs):
 	# add_solutions(list_solutions)
 
 def run_on_all_instances(name):
-	file_a = "UPDATED BEST RANDOM.txt".format(name)
+	file_a = "UPDATED BEST RANDOM {0}.txt".format(name)
 	file_b = "SOLUTIONS RECORDS - {0}.txt".format(name)
 	i = 0
 	updated_instances = 0
 	sol_list = []
 	graphs = {}
 
-	if not os.path.exists(file_a):
-		copyfile("COMBINED SOLUTIONS", file_a)
-	if not os.path.exists(file_b):
-		copyfile("COMBINED SOLUTIONS", file_b)
+	copyfile("COMBINED SOLUTIONS", file_a)
+	copyfile("COMBINED SOLUTIONS", file_b)
 
 	try:
 		i+= 1
@@ -44,7 +42,7 @@ def run_on_all_instances(name):
 		solved = write_zero_penalty_list(file_a)
 		print(solved)
 		print("{0} instances with penalty 0!".format(str(len(solved))))
-		for instance in range(1, 493):
+		for instance in range(1, 11):
 			if str(instance) not in solved:
 				print("\nProcessing input {0} on iteration {1}".format(str(instance), str(i)))
 				min_penalty = 9999
@@ -103,9 +101,9 @@ def run_repeat_safe():
 	except KeyboardInterrupt:
 		print("Repetition interrupted on instance {0} of iteration {1}. ".format(instance, i))
 
-def run_repeat_fast(name):
-	file_a = "UPDATED BEST RANDOM + {0}.txt".format(name)
-	file_b = "SOLUTIONS RECORDS - {0}.txt".format(name)
+def run_repeat_fast(name=""):
+	file_a = "UPDATED BEST RANDOM.txt".format(name)
+	file_b = "SOLUTIONS RECORDS - M.txt".format(name)
 	i = 0
 	updated_instances = 0
 	sol_list = []
@@ -145,7 +143,7 @@ def run_repeat_fast(name):
 	except KeyboardInterrupt:
 		print("Repetition interrupted on instance {0} of iteration {1}. ".format(instance, i))
 
-
+# run_repeat_fast()
 
 name = input("Type the first letter of your name: ")
 run_on_all_instances(name)
