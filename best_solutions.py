@@ -8,7 +8,7 @@ from shutil import copyfile
 	The instance_number should be an INT, algorithm_name should be a STRING, penalty should be 
 	an INT, and new_solution should be a STRING in standard form. """
 
-def write_file(output_file, list_solutions):
+def write_file(output_file="DEFAULT_OUT", list_solutions):
 	backup_filename = output_file + ".bak"
 	file_exists = os.path.exists(output_file) 
 	data = []

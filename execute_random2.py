@@ -53,7 +53,7 @@ def run_repeat():
 							curr_best = form_sol
 							if min_penalty == 0:
 								break
-					add_solutions([curr_best,])
+					add_solutions(file_b, [curr_best,])
 			print("Updating {0} with {1}...".format(file_a, file_b))
 			updated_instances += update_sol(file_a, file_b)
 			print("Updating condensed solutions...")

@@ -160,19 +160,19 @@ def update_sol_list(base, new):
 
 def write_condensed_solutions(input_f):
     read_file = open(input_f, "r")
-    write_file = open("Condensed Solution Records", "w")
+    out_file = open("Condensed Solution Records", "w")
     data = read_file.readlines()
     for line in data:
         penalty_tokens = line.split("|")
         instance_tokens = line.split(":")
         instance_number = instance_tokens[0]
         penalty = penalty_tokens[1]
-        write_file.write(instance_number + ": " + penalty + "\n")
+        out_file.write(instance_number + ": " + penalty + "\n")
 
 def write_zero_penalty_list(input_f):
     lst = []
     read_file = open(input_f, "r")
-    write_file = open("Zero Penalty Instances", "w")
+    out_file = open("Zero Penalty Instances", "w")
     data = read_file.readlines()
     for line in data:
         penalty_tokens = line.split("|")
@@ -180,7 +180,7 @@ def write_zero_penalty_list(input_f):
         instance_number = instance_tokens[0]
         penalty = penalty_tokens[1]
         if int(penalty) == 0:
-            write_file.write(instance_number + ", ")
+            out_file.write(instance_number + ", ")
             lst.append(instance_number)
     return lst
 
@@ -209,8 +209,8 @@ def read_solution_line(line):
     solution = solution.replace('', "")
     return [instance_number, algorithm_type, penalty, solution]
 
-def add_solutions(list_solutions):
-    write_file(list_solutions)
+def add_solutions(out_file="DEFAULT_OUT",list_solutions):
+    write_file(out_file, list_solutions)
 
 def validate_formatted_solution(solution):
     cycle_list = []
