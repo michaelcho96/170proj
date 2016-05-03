@@ -58,6 +58,14 @@ def do_not_test_set(input_f):
     out_set = set([])
     out_set.add(1)
     out_set.add(12)
+    out_set.add(13)
+    out_set.add(17)
+    out_set.add(22)
+    out_set.add(47)
+    out_set.add(51)
+    out_set.add(60)
+    out_set.add(61)
+    out_set.add(70)
     with open(input_f) as in_f:
         for i in range(0,492):
             split_line = read_solution_line(in_f.readline())
@@ -72,7 +80,7 @@ def do_not_test_set(input_f):
 """ Constructs an undirected graph of all valid cycles, with an edge between two nodes
    of the graph if the underlying cycles share at least one vertex """
 def construct_cluster_graph(G):
-    list_cycles = list(nx.simple_cycles(G))
+    list_cycles = list(find_cycles(G))
     # We build our secondary graph of cycles
     CGraph = nx.Graph()
     counter = 0
@@ -92,6 +100,13 @@ def construct_cluster_graph(G):
                 if contain_same_element(cluster_a_nodes, cluster_b_nodes):
                     CGraph.add_edge(cluster_a, cluster_b)
     return CGraph
+
+def print_cluster_graph_cycles(CG):
+    for node in CG:
+        print("Cluster: " + str(node))
+        print("Nodes: " + str(CG.node[node]['nodes']))
+        for edge in CG.edges(node, False):
+            print(edge)
 
 """ Helper function for construct_cluster_graph() """
 def contain_same_element(list_a, list_b):
