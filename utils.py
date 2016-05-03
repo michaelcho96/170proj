@@ -5,6 +5,7 @@ import os.path
 import io
 import os
 import signal
+import hashlib
 from shutil import copyfile
 from best_solutions import write_file
 from collections import defaultdict
