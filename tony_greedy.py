@@ -7,6 +7,7 @@ from utils import contain_same_element
 import multiprocessing
 import time
 import sys
+import random
 
 solved_instance_list = [1, 3, 5, 6, 9, 10, 21, 23, 25, 27, 28, 30, 31, 32, 33, 36, 41, 42, 43, 44, 52,
                         53, 55, 64, 67, 72, 75, 77, 78, 80, 82, 83, 86, 89, 92, 95, 96, 97, 98, 99, 100,
@@ -26,25 +27,32 @@ def greedy_algorithm(G):
 	valid_nodes = CG.nodes()
 	selected_clusters = []
 	pre_penalty = 0
+	# cg_penalty = 0
 	while len(valid_nodes) != 0:
+		# node_selected = find_max_penalty(valid_nodes, CG)
 		node_selected = find_min_weighted_degree(valid_nodes, CG)
-		pre_penalty += CG.node[node_selected]['penalty']
+		# node_selected = find_min_degree(valid_nodes, CG)
+		# node_selected = find_random(valid_nodes, CG)
+		pre_penalty += CG_copy.node[node_selected]['penalty']
 		selected_clusters.append(node_selected)
 		list_edges = CG.edges(node_selected, False)
 		nodes_to_remove = set()
 		nodes_to_remove.add(node_selected)
+		# print len(list_edges)
 		for edge in list_edges:
-			nodes_to_remove.add(edge[0])
+			assert (edge[0] == node_selected)
 			nodes_to_remove.add(edge[1])
 		for node in nodes_to_remove:
 			valid_nodes.remove(node)
+			# cg_penalty += CG_copy.node[node]['penalty']
 			CG.remove_node(node)
 	list_cycles = []
 	for cluster in selected_clusters:
 		list_cycles.append(CG_copy.node[cluster]['nodes'])
 	penalty = find_total_penalty(G) - pre_penalty
 	output_string = format_output_cycles(list_cycles)
-	print(find_total_penalty(G), pre_penalty)
+	# print(find_total_penalty(G), pre_penalty, cg_penalty, penalty)
+	print [output_string, penalty]
 	return [output_string, penalty]
 	
 def find_max_penalty(node_list, CG):
@@ -56,6 +64,21 @@ def find_max_penalty(node_list, CG):
 			max_penalty = penalty
 			max_node = node
 	return max_node
+
+def find_min_degree(node_list, CG):
+	min_neighbors = sys.maxsize
+	min_node = None
+	for node in node_list:
+		n_neighbors = len(CG.edges(node, False))
+		if n_neighbors < min_neighbors:
+			min_neighbors = n_neighbors
+			min_node = node
+	return min_node
+
+def find_random(node_list, CG):
+	k = len(node_list)
+	r = random.randint(0, k-1)
+	return node_list[r]
 
 def find_min_weighted_degree(node_list, CG):
 	min_weighted_degree = sys.maxsize
@@ -76,6 +99,7 @@ def find_min_weighted_degree(node_list, CG):
 		if weighted_degree < min_weighted_degree:
 			min_weighted_degree = weighted_degree
 			selected_node = node
+	# print selected_node, CG.node[selected_node]['penalty'], min_weighted_degree, "|"
 	return selected_node
 
 def execute_greedy(index):
@@ -84,32 +108,8 @@ def execute_greedy(index):
 	solution = greedy_algorithm(G)
 	formatted_solution = [index, "Greedy", solution[1], solution[0]]
 	list_solutions = [formatted_solution]
-	outfile = "SOLUTION RECORDS TONY"
+	outfile = "SOLUTIONS RECORDS - T.txt"
 	add_solutions(list_solutions, outfile)
-
-# """ Constructs an undirected graph of all valid cycles, with an edge between two nodes
-#    of the graph if the underlying cycles share at least one vertex """
-# def construct_cluster_graph(G):
-#     list_cycles = list(get_approx_cycles(G))
-#     # We build our secondary graph of cycles
-#     CGraph = nx.Graph()
-#     counter = 0
-#     for cycle in list_cycles:
-#         penalty = 0
-#         for node in cycle:
-#             penalty += G.node[node]['penalty']
-#         CGraph.add_node(counter, penalty= penalty, nodes=cycle)
-#         counter += 1
-#     # If two clusters contain the same node, then we draw 
-#     # an edge between them.
-#     for cluster_a in CGraph:
-#         cluster_a_nodes = CGraph.node[cluster_a]['nodes']
-#         for cluster_b in CGraph:
-#             if cluster_a != cluster_b:
-#                 cluster_b_nodes = CGraph.node[cluster_b]['nodes']
-#                 if contain_same_element(cluster_a_nodes, cluster_b_nodes):
-#                     CGraph.add_edge(cluster_a, cluster_b)
-#     return CGraph
 
 def construct_cluster_graph(input_graph):
 	# find cycles through approximation
@@ -117,20 +117,19 @@ def construct_cluster_graph(input_graph):
 	CGraph = nx.Graph()
 	counter = 0
 	while G.nodes():
-		source_node = G.nodes()[0]
+		k = len(G.nodes())
+		r = random.randint(0, k-1)
+		assert(r < k)
+		source_node = G.nodes()[r]
 		cycle = find_cycle(G, source_node)
 		if cycle != []:
 			penalty = 0
-			i = 0
 			for node in cycle:
 			    penalty += G.node[node]['penalty']
-			    if i % 2 == 0:
-			    	G.remove_node(node)
-			    i += 1
+			    # G.remove_node(node)
 			CGraph.add_node(counter, penalty= penalty, nodes=cycle)
 			counter += 1
-		else:
-			G.remove_node(source_node)
+		G.remove_node(source_node)
 	print "done finding cycles"
 	# If two clusters contain the same node, then we draw 
     # an edge between them.
@@ -171,7 +170,7 @@ def find_edges_to_node(G, source_node):
 def timed_execution():
 	if __name__ == '__main__':
     	# Start foo as a process
-		for index in range(1,493):
+		for index in range(180,493):
 			if index in solved_instance_list:
 				continue
 			print("Processing input " + str(index) + ".")

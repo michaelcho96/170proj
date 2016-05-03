@@ -57,6 +57,7 @@ def create_graph(instance):
 def do_not_test_set(input_f):
     out_set = set([])
     out_set.add(1)
+    out_set.add(12)
     with open(input_f) as in_f:
         for i in range(0,492):
             split_line = read_solution_line(in_f.readline())
@@ -140,6 +141,7 @@ def combine(a, b):
     data_a = file_a.readlines()
     data_b = file_b.readlines()
     out_f = open("COMBINED SOLUTIONS", "w")
+    counter = 0
     for index in range(0,492):
         line_a = read_solution_line(data_a[index])
         line_b = read_solution_line(data_b[index])
@@ -147,8 +149,10 @@ def combine(a, b):
             print("Updating solution for instance " + str(index + 1))
             print("Penalty reduced from " + str(line_a[2]) + " to " + str(line_b[2]))
             out_f.write(data_b[index])
+            counter += 1
         else:
             out_f.write(data_a[index])
+    print(str(counter) + " instances updated.")
 
 def update_sol_list(base, new, log="log.txt"):
     """
