@@ -60,8 +60,6 @@ def run_on_all_instances(name):
 				add_solutions([curr_best,], file_b)
 		print("Updating {0} with {1}...".format(file_a, file_b))
 		updated_instances += update_sol_list(file_a, file_b)
-		print("Updating condensed solutions...")
-		write_condensed_solutions(file_a)
 	except KeyboardInterrupt:
 		print("Repetition interrupted on instance {0} of iteration {1}. ".format(instance, i))
 
