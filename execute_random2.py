@@ -47,7 +47,7 @@ def run_on_all_instances(name):
 				print("\nProcessing input {0} on iteration {1}".format(str(instance), str(i)))
 				min_penalty = 9999
 				curr_best = None
-				for index in range (0,30):
+				for index in range (0,50):
 					print(".", end="")
 					form_sol, graphs = execute_random2(instance, graphs)
 					penalty = form_sol[2] 
