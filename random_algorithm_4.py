@@ -55,6 +55,8 @@ def find_random_length_cycle(G, root_node):
 				copy_cycle = list(cycle)
 				while change:
 					cycle = change_cycle(copyG, source, target)
+					if cycle == []:
+						break
 				#If altering the graph return no cycle, we revert the cycle
 				if not cycle:
 					cycle = copy_cycle

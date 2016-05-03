@@ -66,6 +66,12 @@ def do_not_test_set(input_f):
     out_set.add(60)
     out_set.add(61)
     out_set.add(70)
+    out_set.add(81)
+    out_set.add(149)
+    out_set.add(109)
+    out_set.add(439)
+    out_set.add(435)
+    out_set.add(427)
     with open(input_f) as in_f:
         for i in range(0,492):
             split_line = read_solution_line(in_f.readline())
