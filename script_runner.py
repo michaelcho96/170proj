@@ -31,6 +31,8 @@ for element in range(1, 493):
 		out_file.write(str(element) + ": " + penalty + "\n") """
 
 G = create_graph("instances/8.in")	
-CG = construct_cluster_graph(G)
-print_cluster_graph_cycles(CG)
+penalty = find_total_penalty(G)
+print(penalty)
+#CG = construct_cluster_graph(G)
+#print_cluster_graph_cycles(CG)
 
