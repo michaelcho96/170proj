@@ -24,7 +24,6 @@ def run_on_all_instances(write_file):
 			print("Processing input " + str(instance) + ".")
 			execute_random4(instance, write_file)
 			execute_random4(instance, write_file)
-			execute_random4(instance, write_file)
 
 if len(sys.argv) != 2:
 	print("Usage: execute_random_4.py write_file_name")
