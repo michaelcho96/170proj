@@ -12,7 +12,7 @@ def execute_random4(index):
 	solution = random_algorithm_4(G)
 	formatted_solution = [index, "Random4", solution[1], solution[0]]
 	list_solutions = [formatted_solution,]
-	add_solutions(list_solutions, "greedy4_solutions")
+	add_solutions(list_solutions, "random_4_solutions")
 
 def run_on_all_instances():
 	filename = "COMBINED SOLUTIONS"
@@ -20,6 +20,8 @@ def run_on_all_instances():
 	for instance in range(1,493):
 		if instance not in do_not_test_set(filename):
 			print("Processing input " + str(instance) + ".")
+			execute_random4(instance)
+			execute_random4(instance)
 			execute_random4(instance)
 
 run_on_all_instances()	
