@@ -1,5 +1,1 @@
-This is a project for CS170 SP16. We designed an algorithm to solve a kidney-donor problem, which is NP-hard.
-More specifications are included in a project specs PDF. We use randomized algorithms to repeatedly find
-cycles in the graph of donors, choosing a random cycle each time to include in our solution. We update
-a solution if its penalty is lower than that of the previous solution. Contributers to this project
-include: Walter Wu, Michael Cho. People who lightly reviewed the code included: Tony Nie, David Phan. 
+This is a project for CS170 SP16. We designed an algorithm to solve a kidney-donor problem, which is NP-hard. More specifications are included in a project specs PDF. We use randomized algorithms to repeatedly find cycles in the graph of donors, choosing a random cycle each time to include in our solution. We updatea solution if its penalty is lower than that of the previous solution. Contributers to this projectinclude: Walter Wu, Michael Cho. People who lightly reviewed the code included: Tony Nie, David Phan. 
